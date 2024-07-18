@@ -1,5 +1,5 @@
 /// @description Insert description here
 // You can write your code in this editor
-global.deltaTime = delta_time / 1000000;
 
-show_debug_overlay(true);
+draw_set_color(c_black)
+draw_rectangle(-960, 0, 0, 540, false);

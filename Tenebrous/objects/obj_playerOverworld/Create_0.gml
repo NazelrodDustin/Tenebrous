@@ -3,5 +3,5 @@
 
 
 moveSpeed = 5;
-collisionList = [];
+collisionList = [obj_tree];
 image_speed = 0;

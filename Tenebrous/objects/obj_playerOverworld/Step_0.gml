@@ -27,4 +27,7 @@ if (xAmt != 0 || yAmt != 0){
 
 
 	move_and_collide(xMove, yMove, collisionList);
+	
+	x = round(x);
+	y = round(y);
 }

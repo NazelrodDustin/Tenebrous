@@ -7,3 +7,8 @@ with (all){
 	}
 }
 
+surface_resize(application_surface, 960, 540);
+
+display_set_gui_size(960, 540);
+
+window_set_size(960, 540);

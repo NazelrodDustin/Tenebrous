@@ -54,8 +54,8 @@
   "resourceType":"GMProject",
   "resourceVersion":"2.0",
   "RoomOrderNodes":[
-    {"roomId":{"name":"rm_baseOverworld","path":"rooms/rm_baseOverworld/rm_baseOverworld.yy",},},
     {"roomId":{"name":"rm_startmenu","path":"rooms/rm_startmenu/rm_startmenu.yy",},},
+    {"roomId":{"name":"rm_baseOverworld","path":"rooms/rm_baseOverworld/rm_baseOverworld.yy",},},
   ],
   "templateType":"game",
   "TextureGroups":[

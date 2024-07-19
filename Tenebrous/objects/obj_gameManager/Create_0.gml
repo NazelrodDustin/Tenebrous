@@ -1,13 +1,8 @@
 /// @description Insert description here
 // You can write your code in this editor
 
-
-camera_set_begin_script(view_camera[0], function(){
-	draw_clear(c_orange);	
-});
-
 // Create an array of room arrays [x, y, room] 
-global.roomList = array_create(1, [0, 0, rm_baseOverworld]);
+global.roomList = array_create(1, [0, 0, room_duplicate(rm_baseOverworld)]);
 global.deltaTime = delta_time / 1000000;
 global.pauseOverworld = false;
 
@@ -33,24 +28,33 @@ transitionTimeSource = time_source_create(time_source_global, 1, time_source_uni
 		if (transitionAlpha >= 1){
 			transitionAlpha = 1;
 			fullyOcluded = true;
-			room_goto(transitionRoom);
-			if (!firstTransition){
-				firstTransition = true;
-				var spawnX = room_width / 2 + irandom_range(- room_width / 4, room_width / 4);
-				var spawnY = room_height / 2 + irandom_range(- room_height / 4, room_height / 4);
-				
-				global.playerOverworld = instance_create_depth(spawnX, spawnY, 0, obj_playerOverworld);
-			}
+
 		}	
 	}else if (fullyOcluded && !(timeOcluded >= timeToOclude)){
+		if (timeOcluded <= 0){
+			room_goto(transitionRoom);
+		}
+		
 		timeOcluded += global.deltaTime;
 	}else{
+		
+		if (!firstTransition && transitionAlpha >= 1){
+			firstTransition = true;
+			var spawnX = 0;//room_width / 2 + irandom_range(- room_width / 4, room_width / 4);
+			var spawnY = 0;//room_height / 2 + irandom_range(- room_height / 4, room_height / 4);
+				
+			global.playerOverworld = instance_create_depth(spawnX, spawnY, 0, obj_playerOverworld);	
+			camera_set_view_target(view_camera[0], global.playerOverworld);
+		}
 		transitionAlpha -= fadeOutPercent * global.deltaTime;
+		
+		if (transitionAlpha < 0.6){
+			global.pauseOverworld = false;	
+		}
 		
 		if (transitionAlpha <= 0){
 			transitionAlpha = 0;
 			time_source_stop(transitionTimeSource);
-			global.pauseOverworld = true;
 		}	
 	}
 }, [], -1);
@@ -66,6 +70,7 @@ function transition(_room){
 
 // Overworld
 overworldSurfacePosition = 0;
+inBattle = false;
 
 // Battle In
 battleAppearTime = 1.5; // Seconds
@@ -75,7 +80,7 @@ battleInTimeSource = time_source_create(time_source_global, 1, time_source_units
 	global.pauseOverworld = true;
 	var percent;
 	if (battleCountUp < battleAppearTime){
-		battleCountUp += 1 / 60;
+		battleCountUp += global.deltaTime;
 		percent = battleCountUp / battleAppearTime;
 	}else{
 		percent = 1;
@@ -88,6 +93,7 @@ battleInTimeSource = time_source_create(time_source_global, 1, time_source_units
 function showBattle(){
 	time_source_start(battleInTimeSource);
 	battleCountUp = 0;
+	inBattle = true;
 }
 
 
@@ -99,7 +105,7 @@ battleOutTimeSource = time_source_create(time_source_global, 1, time_source_unit
 	global.pauseOverworld = false;
 	var percent;
 	if (battleCountDown < battleDisappearTime){
-		battleCountDown += 1 / 60;
+		battleCountDown += global.deltaTime;
 		percent = battleCountDown / battleDisappearTime;
 	}else{
 		percent = 1;
@@ -112,6 +118,7 @@ battleOutTimeSource = time_source_create(time_source_global, 1, time_source_unit
 function removeBattle(){
 	time_source_start(battleOutTimeSource);
 	battleCountDown = 0;
+	inBattle = false;
 }
 
 overworldSurface = noone;
@@ -120,7 +127,7 @@ camera_set_begin_script(view_camera[0], function(){
 	if (!surface_exists(overworldSurface)){
 		overworldSurface = surface_create(960, 540);	
 	}
-
+	
 	view_surface_id[0] = overworldSurface;
 	
 });
@@ -133,4 +140,4 @@ surfBattle = noone
 smearFrame = 0;
 smearSpeed = 15;
 
-show_debug_overlay(true);
+transition(global.roomList[0][2], [true, false, false, false, false, false, false, true]);

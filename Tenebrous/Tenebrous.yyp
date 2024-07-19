@@ -45,6 +45,7 @@
     {"id":{"name":"spr_checker","path":"sprites/spr_checker/spr_checker.yy",},},
     {"id":{"name":"spr_circleFade","path":"sprites/spr_circleFade/spr_circleFade.yy",},},
     {"id":{"name":"spr_placeholder","path":"sprites/spr_placeholder/spr_placeholder.yy",},},
+    {"id":{"name":"spr_smear","path":"sprites/spr_smear/spr_smear.yy",},},
   ],
   "resourceType":"GMProject",
   "resourceVersion":"2.0",

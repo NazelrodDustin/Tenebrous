@@ -125,3 +125,10 @@ function removeBattle(){
 	time_source_start(battleOutTimeSource);
 	battleCountDown = 0;
 }
+
+// Battle Smear
+smearX = 0;
+smearY = 0;
+surfBattle = noone
+smearFrame = 0;
+smearSpeed = 25;

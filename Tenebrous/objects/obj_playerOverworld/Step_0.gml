@@ -7,7 +7,7 @@ var yAmt = keyboard_check(ord("S")) - keyboard_check(ord("W"));
 
 var dir = point_direction(0, 0, xAmt, yAmt);
 
-if (xAmt != 0 || yAmt != 0){
+if (!global.pauseOverworld && (xAmt != 0 || yAmt != 0)){
 	var xMove = lengthdir_x(moveSpeed, dir);
 	var yMove = lengthdir_y(moveSpeed, dir);
 

@@ -64,6 +64,8 @@ function transition(_room){
 	time_source_start(transitionTimeSource);
 }
 
+// Overworld
+overworldSurfacePosition = 0;
 
 // Battle In
 battleAppearTime = 1.5; // Seconds
@@ -79,26 +81,17 @@ battleInTimeSource = time_source_create(time_source_global, 1, time_source_units
 		percent = 1;
 		time_source_stop(battleInTimeSource);
 	}
-	var position = animcurve_channel_evaluate(animcurve_get_channel(anc_viewBattleDistort, "In"), percent);
-	view_hport[1] = position;
-	view_hport[0] = (540 - position);
-	view_yport[0] = position;
-	
-	camera_set_view_size(view_camera[0], view_wport[0], view_hport[0]);
-	camera_set_view_size(view_camera[1], view_wport[1], view_hport[1]);
-	show_debug_message(string("H-Port: {0}, Camera Height: {1}", view_hport, camera_get_view_height(view_camera[0])));
-	
-	
+	overworldSurfacePosition = animcurve_channel_evaluate(animcurve_get_channel(anc_viewBattleDistort, "In"), percent);
 }, [], -1);
 
 
 function showBattle(){
 	time_source_start(battleInTimeSource);
 	battleCountUp = 0;
-	view_visible[1] = true;
 }
 
 
+// Battle Out
 battleDisappearTime = .75; // Seconds
 battleCountDown = 0;
 
@@ -110,15 +103,10 @@ battleOutTimeSource = time_source_create(time_source_global, 1, time_source_unit
 		percent = battleCountDown / battleDisappearTime;
 	}else{
 		percent = 1;
-		view_visible[1] = false;
 		time_source_stop(battleOutTimeSource);
 	}
-	var position = animcurve_channel_evaluate(animcurve_get_channel(anc_viewBattleDistort, "Out"), percent);
-	view_hport[1] = position; 
-	view_hport[0] = (540 - position);
-	view_yport[0] = position; 
-	camera_set_view_size(view_camera[0], view_wport[0], view_hport[0]);
-	camera_set_view_size(view_camera[1], view_wport[1], view_hport[1]);
+	
+	overworldSurfacePosition = animcurve_channel_evaluate(animcurve_get_channel(anc_viewBattleDistort, "Out"), percent);
 }, [], -1);
 
 function removeBattle(){
@@ -126,9 +114,23 @@ function removeBattle(){
 	battleCountDown = 0;
 }
 
+overworldSurface = noone;
+
+camera_set_begin_script(view_camera[0], function(){
+	if (!surface_exists(overworldSurface)){
+		overworldSurface = surface_create(960, 540);	
+	}
+
+	view_surface_id[0] = overworldSurface;
+	
+});
+
+
 // Battle Smear
 smearX = 0;
 smearY = 0;
 surfBattle = noone
 smearFrame = 0;
-smearSpeed = 25;
+smearSpeed = 15;
+
+show_debug_overlay(true);

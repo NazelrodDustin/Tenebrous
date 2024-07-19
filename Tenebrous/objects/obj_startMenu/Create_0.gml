@@ -7,8 +7,8 @@ with (all){
 	}
 }
 
-surface_resize(application_surface, 960, 540);
+surface_resize(application_surface, browser_width, browser_height);
 
-display_set_gui_size(960, 540);
+display_set_gui_size(browser_width, browser_height);
 
-window_set_size(960, 540);
+window_set_size(browser_width, browser_height);

@@ -37,6 +37,7 @@
   "name":"Tenebrous",
   "resources":[
     {"id":{"name":"anc_viewBattleDistort","path":"animcurves/anc_viewBattleDistort/anc_viewBattleDistort.yy",},},
+    {"id":{"name":"fnt_robotomono","path":"fonts/fnt_robotomono/fnt_robotomono.yy",},},
     {"id":{"name":"obj_gameManager","path":"objects/obj_gameManager/obj_gameManager.yy",},},
     {"id":{"name":"obj_playerOverworld","path":"objects/obj_playerOverworld/obj_playerOverworld.yy",},},
     {"id":{"name":"obj_soundEffectController","path":"objects/obj_soundEffectController/obj_soundEffectController.yy",},},

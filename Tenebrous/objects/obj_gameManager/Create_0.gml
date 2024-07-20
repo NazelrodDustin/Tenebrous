@@ -71,6 +71,7 @@ function transition(_room){
 
 // Overworld
 overworldSurfacePosition = 0;
+inOverworld = true;
 inBattle = false;
 
 // Battle In
@@ -128,10 +129,21 @@ overworldSurface = noone;
 
 
 // Battle Smear
-smearX = 0;
-smearY = 0;
-surfBattle = noone
-smearFrame = 0;
-smearSpeed = 15;
+battleSurface = noone;
+battlePartSystemTop = part_system_create(ps_smear);
+battlePartSystemBottom = part_system_create(ps_smear);
+battleBG = make_color_rgb(34, 32, 52);
+
+part_system_automatic_draw(battlePartSystemTop, false);
+part_system_automatic_draw(battlePartSystemBottom, false);
+
+part_system_position(battlePartSystemTop, 2048 - 256, 0);
+part_system_position(battlePartSystemBottom, 2048 - 256, 412);
+
+
+
+
+
+
 
 transition(global.roomList[0][2]);

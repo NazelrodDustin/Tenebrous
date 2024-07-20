@@ -5,6 +5,7 @@
 global.roomList = array_create(1, [0, 0, room_duplicate(rm_baseOverworld)]);
 global.deltaTime = delta_time / 1000000;
 global.pauseOverworld = false;
+global.playerOverworld = instance_create_depth(-480, 270, 0, obj_playerOverworld);
 
 // Transitions
 fadeInPercent = 0.4;
@@ -40,10 +41,10 @@ transitionTimeSource = time_source_create(time_source_global, 1, time_source_uni
 		
 		if (!firstTransition && transitionAlpha >= 1){
 			firstTransition = true;
-			var spawnX = 0;//room_width / 2 + irandom_range(- room_width / 4, room_width / 4);
-			var spawnY = 0;//room_height / 2 + irandom_range(- room_height / 4, room_height / 4);
-				
-			global.playerOverworld = instance_create_depth(spawnX, spawnY, 0, obj_playerOverworld);	
+
+			
+			global.playerOverworld.x = room_width / 2 + irandom_range(-room_width / 4, room_width / 4);
+			global.playerOverworld.y = room_height / 2 + irandom_range(-room_height / 4, room_height / 4);
 			camera_set_view_target(view_camera[0], global.playerOverworld);
 		}
 		transitionAlpha -= fadeOutPercent * global.deltaTime;
@@ -102,13 +103,14 @@ battleDisappearTime = .75; // Seconds
 battleCountDown = 0;
 
 battleOutTimeSource = time_source_create(time_source_global, 1, time_source_units_frames, function(){
-	global.pauseOverworld = false;
 	var percent;
 	if (battleCountDown < battleDisappearTime){
 		battleCountDown += global.deltaTime;
 		percent = battleCountDown / battleDisappearTime;
 	}else{
 		percent = 1;
+		global.pauseOverworld = false;
+		inBattle = false;
 		time_source_stop(battleOutTimeSource);
 	}
 	
@@ -118,19 +120,11 @@ battleOutTimeSource = time_source_create(time_source_global, 1, time_source_unit
 function removeBattle(){
 	time_source_start(battleOutTimeSource);
 	battleCountDown = 0;
-	inBattle = false;
+	
 }
 
 overworldSurface = noone;
 
-camera_set_begin_script(view_camera[0], function(){
-	if (!surface_exists(overworldSurface)){
-		overworldSurface = surface_create(960, 540);	
-	}
-	
-	view_surface_id[0] = overworldSurface;
-	
-});
 
 
 // Battle Smear
@@ -140,4 +134,4 @@ surfBattle = noone
 smearFrame = 0;
 smearSpeed = 15;
 
-transition(global.roomList[0][2], [true, false, false, false, false, false, false, true]);
+transition(global.roomList[0][2]);

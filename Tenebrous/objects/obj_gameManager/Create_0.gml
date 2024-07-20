@@ -86,7 +86,10 @@ battleInTimeSource = time_source_create(time_source_global, 1, time_source_units
 		percent = battleCountUp / battleAppearTime;
 	}else{
 		percent = 1;
-		time_source_stop(battleInTimeSource);
+		battlePartSurfaceOffset += max(battlePartSurfaceOffset * .125, 1);
+		if (battlePartSurfaceOffset > 1024){
+			time_source_stop(battleInTimeSource);
+		}
 	}
 	overworldSurfacePosition = animcurve_channel_evaluate(animcurve_get_channel(anc_viewBattleDistort, "In"), percent);
 }, [], -1);
@@ -95,6 +98,7 @@ battleInTimeSource = time_source_create(time_source_global, 1, time_source_units
 function showBattle(){
 	time_source_start(battleInTimeSource);
 	battleCountUp = 0;
+	battlePartSurfaceOffset = 0;
 	inBattle = true;
 }
 
@@ -132,13 +136,14 @@ overworldSurface = noone;
 battleSurface = noone;
 battlePartSystemTop = part_system_create(ps_smear);
 battlePartSystemBottom = part_system_create(ps_smear);
+battlePartSurfaceTop = noone;
+battlePartSurfaceBottom = noone;
+battlePartSurfaceOffset = 0;
+battleBGSpriteScale = 0;
 battleBG = make_color_rgb(34, 32, 52);
 
 part_system_automatic_draw(battlePartSystemTop, false);
 part_system_automatic_draw(battlePartSystemBottom, false);
-
-part_system_position(battlePartSystemTop, 2048 - 256, 0);
-part_system_position(battlePartSystemBottom, 2048 - 256, 412);
 
 
 

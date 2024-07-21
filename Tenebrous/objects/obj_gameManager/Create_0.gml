@@ -1,17 +1,22 @@
-// Create an array of room arrays [x, y, room] 
+/// @description Insert description here
+// You can write your code in this editor
+
+// Create an array of room arrays [x, y, room]
+randomize();
+global.seed = random_get_seed(); 
 global.roomList = array_create(1, [0, 0, room_duplicate(rm_baseOverworld)]);
 global.deltaTime = delta_time / 1000000;
 global.pauseOverworld = false;
 global.playerOverworld = instance_create_depth(-480, 270, 0, obj_playerOverworld);
 
 // Transitions
-fadeInPercent = 0.4;
-fadeOutPercent = 0.5;
+fadeInPercent = 10;//0.4;
+fadeOutPercent = 10;//0.5;
 transitionAlpha = 0.0;
 transitionStarted = false;
 fullyOcluded = false;
 timeOcluded = 0; // MS
-timeToOclude = 1; // Seconds
+timeToOclude = .1;//1; // Seconds
 transitionRoom = noone;
 firstTransition = false;
 
@@ -84,7 +89,10 @@ battleInTimeSource = time_source_create(time_source_global, 1, time_source_units
 	}else{
 		percent = 1;
 		battlePartSurfaceOffset += max(battlePartSurfaceOffset * .125, 1);
+		battleBGSpriteScale = battlePartSurfaceOffset / 1024;
+		
 		if (battlePartSurfaceOffset > 1024){
+			battleBGSpriteScale = 1;
 			time_source_stop(battleInTimeSource);
 		}
 	}
@@ -96,6 +104,7 @@ function showBattle(){
 	time_source_start(battleInTimeSource);
 	battleCountUp = 0;
 	battlePartSurfaceOffset = 0;
+	battleBGSpriteScale = 0;
 	inBattle = true;
 }
 
@@ -131,21 +140,13 @@ overworldSurface = noone;
 
 // Battle Smear
 battleSurface = noone;
-battlePartSystemTop = part_system_create(ps_smear);
-battlePartSystemBottom = part_system_create(ps_smear);
-battlePartSurfaceTop = noone;
-battlePartSurfaceBottom = noone;
+battlePartSystem = part_system_create(ps_smear);
+battlePartSurface = noone;
 battlePartSurfaceOffset = 0;
 battleBGSpriteScale = 0;
+battleBGSpriteRotation = random_range(-84305, 84305);
 battleBG = make_color_rgb(34, 32, 52);
 
-part_system_automatic_draw(battlePartSystemTop, false);
-part_system_automatic_draw(battlePartSystemBottom, false);
-
-
-
-
-
-
+part_system_automatic_draw(battlePartSystem, false);
 
 transition(global.roomList[0][2]);

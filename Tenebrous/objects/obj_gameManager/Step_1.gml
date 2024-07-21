@@ -1,5 +1,3 @@
-/// @description Insert description here
-// You can write your code in this editor
 global.deltaTime = 1 / 60;// delta_time / 1000000;
 
 if (global.lastBW != browser_width || global.lastBH != browser_height){

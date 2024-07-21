@@ -1,6 +1,3 @@
-/// @description Insert description here
-// You can write your code in this editor
-
 // Create Battle view;
 if (view_current == 4){
 	draw_set_color(battleBG);

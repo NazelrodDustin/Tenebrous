@@ -1,7 +1,3 @@
-/// @description Insert description here
-// You can write your code in this editor
-
-
 var xAmt = keyboard_check(ord("D")) - keyboard_check(ord("A"));
 var yAmt = keyboard_check(ord("S")) - keyboard_check(ord("W"));
 
@@ -31,3 +27,5 @@ if (!global.pauseOverworld && (xAmt != 0 || yAmt != 0)){
 	x = round(x);
 	y = round(y);
 }
+
+audio_listener_position(x, y, 0);

@@ -1,6 +1,3 @@
-/// @description Insert description here
-// You can write your code in this editor
-
 // Create an array of room arrays [x, y, room] 
 global.roomList = array_create(1, [0, 0, room_duplicate(rm_baseOverworld)]);
 global.deltaTime = delta_time / 1000000;

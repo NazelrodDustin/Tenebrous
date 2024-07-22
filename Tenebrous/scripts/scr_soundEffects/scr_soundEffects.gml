@@ -1,6 +1,6 @@
 
 /// @constructor
-/// @func soundEffect(baseName, falloffRef, gain, pitchRandom, volRandom, falloffMax, falloffFactor,  priority)
+/// @func soundEffect(baseName, gain, pitchRandom, volRandom, falloffRef, falloffMax, falloffFactor,  priority)
 /// @desc Creates a new sound effect and adds all sounds associated with the base name (baseName1, baseName2, etc..)
 /// @param {string} baseName The name for the sound resource minus the number for parsing and adding all the variations
 /// @param {real} gain The gain(volume) of the samples

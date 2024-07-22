@@ -74,7 +74,7 @@ function transition(_room){
 // Overworld
 overworldSurfacePosition = 0;
 inOverworld = true;
-inBattle = false;
+global.inBattle = false;
 
 // Battle In
 battleAppearTime = 1.5; // Seconds
@@ -105,7 +105,7 @@ function showBattle(){
 	battleCountUp = 0;
 	battlePartSurfaceOffset = 0;
 	battleBGSpriteScale = 0;
-	inBattle = true;
+	global.inBattle = true;
 }
 
 
@@ -121,7 +121,7 @@ battleOutTimeSource = time_source_create(time_source_global, 1, time_source_unit
 	}else{
 		percent = 1;
 		global.pauseOverworld = false;
-		inBattle = false;
+		global.inBattle = false;
 		time_source_stop(battleOutTimeSource);
 	}
 	
@@ -145,7 +145,17 @@ battlePartSurface = noone;
 battlePartSurfaceOffset = 0;
 battleBGSpriteScale = 0;
 battleBGSpriteRotation = random_range(-84305, 84305);
-battleBG = make_color_rgb(34, 32, 52);
+battleBG = make_color_rgb(30, 29, 57);
+battlePortalC1 = make_color_rgb(117, 36, 56);
+battlePortalC2 = make_color_rgb(57, 74, 80);
+battlePortalC3 = make_color_rgb(129, 151, 150);
+battlePositions = array_create(5);
+battlePositions[0] = [[480, 206]];
+battlePositions[1] = [[480 + 96, 206], [480 - 96, 206]];
+battlePositions[2] = [[480 + 96, 206 - 96], [480 - 96, 206 - 96], [480, 206 + 96]];
+battlePositions[3] = [[480 + 192, 206 + 96], [480 + 96, 206 - 96], [480 - 96, 206 - 96], [480 - 192, 206 + 96]];
+battlePositions[4] = [[480 + 192, 206 + 96], [480 + 96, 206 - 96], [480 - 96, 206 - 96], [480 - 192, 206 + 96], [480, 206 + 64]];
+battlePosition = 0;
 
 part_system_automatic_draw(battlePartSystem, false);
 

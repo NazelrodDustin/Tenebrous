@@ -1,7 +1,7 @@
 draw_set_color(c_black);
 
 if (view_current == 7){
-	if (inBattle && surface_exists(battleSurface)){
+	if (global.inBattle && surface_exists(battleSurface)){
 		draw_surface(battleSurface, 2048, 1620);
 	}
 

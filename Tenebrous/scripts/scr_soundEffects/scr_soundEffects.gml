@@ -1,6 +1,5 @@
-
 /// @constructor
-/// @func soundEffect(baseName, gain, pitchRandom, volRandom, falloffRef, falloffMax, falloffFactor,  priority)
+/// @func soundEffect(baseName, falloffRef, gain, pitchRandom, volRandom, falloffMax, falloffFactor,  priority)
 /// @desc Creates a new sound effect and adds all sounds associated with the base name (baseName1, baseName2, etc..)
 /// @param {string} baseName The name for the sound resource minus the number for parsing and adding all the variations
 /// @param {real} gain The gain(volume) of the samples
@@ -10,7 +9,7 @@
 /// @param {real} [falloffMax] The max distance that the sound can be heard from the listener position        
 /// @param {real} [falloffFactor] The number(1 by default) that the falloff model uses to calculation the falloff curve of the sound effect
 /// @param {real} [priority] The Priority of the sound
-function soundEffect(_baseName, _gain, _pitchRandom, _volRandom, _falloffRef = 600, _falloffMax = 600, _falloutFactor = 2, _priority = 100) constructor {
+function soundEffect(_baseName, _gain, _pitchRandom, _volRandom, _falloffRef = 200, _falloffMax = 600, _falloutFactor = 2, _priority = 100) constructor {
 	__falloffRef = _falloffRef;
 	__falloffMax = _falloffMax;
 	__falloffFactor = _falloutFactor;
@@ -44,12 +43,13 @@ function soundEffect(_baseName, _gain, _pitchRandom, _volRandom, _falloffRef = 6
 		_i++;
 	}
 	
-	/// @method
+	/// @method play(x, y, global, loop)
 	/// @desc Plays the sample at the current RR position
 	/// @param {real} x The x position to play the sound at
 	/// @param {real} y The y position to play the sound at
+	/// @param {bool} global Whether or not the sound should abide by the listener position
 	/// @param {bool} loop Whether or not the sound should loop
-	static play = function(_x, _y, _loop = false){
+	static play = function(_x, _y, _global = false, _loop = false){
 		//Attempt to find a variation of the sound that is not playing
 		var _numberOfSamples = array_length(__samples);
 		var _i = 0;
@@ -66,8 +66,8 @@ function soundEffect(_baseName, _gain, _pitchRandom, _volRandom, _falloffRef = 6
 		//Play the sound 
 		var _volRandomized = random_range(__gain - __volRandom, __gain);
 		var _pitchRandomAdd = random_range(-(__pitchRandom), __pitchRandom);
-		var _soundEffect = audio_play_sound_at(_soundToPlay, _x, _y, 0, __falloffRef, __falloffMax, __falloffFactor, _loop, __priority); 
-		audio_sound_gain(_soundEffect ,_volRandomized, 0);
+		var _soundEffect = (!_global) ? audio_play_sound_at(_soundToPlay, _x, _y, 0, __falloffRef, __falloffMax, __falloffFactor, _loop, __priority) : audio_play_sound(_soundToPlay, __priority, _loop);
+		//audio_sound_gain(_soundEffect ,_volRandomized, 0);
 		audio_sound_pitch(_soundEffect, clamp(1 + _pitchRandomAdd, .1, 10));
 
 		//Randomize RR position

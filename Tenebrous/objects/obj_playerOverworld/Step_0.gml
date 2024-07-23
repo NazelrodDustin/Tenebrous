@@ -61,10 +61,9 @@ if (abs(yOffset) > 2 && soundPlayed){
 }
 
 if (abs(yOffset) < 0.25 && !soundPlayed){
-	soundFootStep.play(x, y, false);
+	soundFootStep.play(x, y, true);
 	soundPlayed = true;
 }
-
 
 audio_listener_position(x, y, 0);
 

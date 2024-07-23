@@ -1,6 +1,6 @@
 
 /// @constructor
-/// @func soundEffect(baseName, falloffRef, gain, pitchRandom, volRandom, falloffMax, falloffFactor,  priority)
+/// @func soundEffect(baseName, gain, pitchRandom, volRandom, falloffRef, falloffMax, falloffFactor,  priority)
 /// @desc Creates a new sound effect and adds all sounds associated with the base name (baseName1, baseName2, etc..)
 /// @param {string} baseName The name for the sound resource minus the number for parsing and adding all the variations
 /// @param {real} gain The gain(volume) of the samples
@@ -10,7 +10,7 @@
 /// @param {real} [falloffMax] The max distance that the sound can be heard from the listener position        
 /// @param {real} [falloffFactor] The number(1 by default) that the falloff model uses to calculation the falloff curve of the sound effect
 /// @param {real} [priority] The Priority of the sound
-function soundEffect(_baseName, _gain, _pitchRandom, _volRandom, _falloffRef = 200, _falloffMax = 600, _falloutFactor = 2, _priority = 100) constructor {
+function soundEffect(_baseName, _gain, _pitchRandom, _volRandom, _falloffRef = 600, _falloffMax = 600, _falloutFactor = 2, _priority = 100) constructor {
 	__falloffRef = _falloffRef;
 	__falloffMax = _falloffMax;
 	__falloffFactor = _falloutFactor;

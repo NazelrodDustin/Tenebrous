@@ -3,11 +3,21 @@
 
 // Create an array of room arrays [x, y, room]
 randomize();
-global.seed = random_get_seed(); 
-global.roomList = array_create(1, [0, 0, room_duplicate(rm_baseOverworld)]);
+global.gameManager = self;
+global.lastBW = browser_width;
+global.lastBH = browser_height;
+global.seed = random_get_seed();
 global.deltaTime = delta_time / 1000000;
 global.pauseOverworld = false;
 global.playerOverworld = instance_create_depth(-480, 270, 0, obj_playerOverworld);
+
+
+// Colors
+global.grassRegularBaseColor = make_color_rgb(70, 130, 50);
+global.grassRegularSplashColor = make_color_rgb(37, 86, 46);
+global.grassCorruptedBaseColor = make_color_rgb(36, 21, 39);
+global.grassCorruptedSplashColor = make_color_rgb(65, 29, 49);
+
 
 // Transitions
 fadeInPercent = 10;//0.4;
@@ -74,7 +84,7 @@ function transition(_room){
 // Overworld
 overworldSurfacePosition = 0;
 inOverworld = true;
-inBattle = false;
+global.inBattle = false;
 
 // Battle In
 battleAppearTime = 1.5; // Seconds
@@ -104,8 +114,10 @@ function showBattle(){
 	time_source_start(battleInTimeSource);
 	battleCountUp = 0;
 	battlePartSurfaceOffset = 0;
+	battleBGSpriteRotation = random_range(-84305, 84305);
 	battleBGSpriteScale = 0;
-	inBattle = true;
+	global.inBattle = true;
+	
 }
 
 
@@ -121,7 +133,7 @@ battleOutTimeSource = time_source_create(time_source_global, 1, time_source_unit
 	}else{
 		percent = 1;
 		global.pauseOverworld = false;
-		inBattle = false;
+		global.inBattle = false;
 		time_source_stop(battleOutTimeSource);
 	}
 	
@@ -145,8 +157,16 @@ battlePartSurface = noone;
 battlePartSurfaceOffset = 0;
 battleBGSpriteScale = 0;
 battleBGSpriteRotation = random_range(-84305, 84305);
-battleBG = make_color_rgb(34, 32, 52);
+battleBG = make_color_rgb(30, 29, 57);
+battlePortalC1 = make_color_rgb(117, 36, 56);
+battlePortalC2 = make_color_rgb(57, 74, 80);
+battlePortalC3 = make_color_rgb(129, 151, 150);
+battlePositions = array_create(5);
+battlePositions[0] = [[480, 206]];
+battlePositions[1] = [[480 + 96, 206], [480 - 96, 206]];
+battlePositions[2] = [[480 + 96, 206 - 96], [480 - 96, 206 - 96], [480, 206 + 96]];
+battlePositions[3] = [[480 + 192, 206 + 96], [480 + 96, 206 - 96], [480 - 96, 206 - 96], [480 - 192, 206 + 96]];
+battlePositions[4] = [[480 + 192, 206 + 96], [480 + 96, 206 - 96], [480 - 96, 206 - 96], [480 - 192, 206 + 96], [480, 206 + 64]];
+battlePosition = 0;
 
 part_system_automatic_draw(battlePartSystem, false);
-
-transition(global.roomList[0][2]);

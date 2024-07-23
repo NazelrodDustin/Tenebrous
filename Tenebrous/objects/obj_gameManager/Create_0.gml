@@ -9,6 +9,14 @@ global.deltaTime = delta_time / 1000000;
 global.pauseOverworld = false;
 global.playerOverworld = instance_create_depth(-480, 270, 0, obj_playerOverworld);
 
+
+// Colors
+global.grassRegularBaseColor = make_color_rgb(70, 130, 50);
+global.grassRegularSplashColor = make_color_rgb(37, 86, 46);
+global.grassCorruptedBaseColor = make_color_rgb(36, 21, 39);
+global.grassCorruptedSplashColor = make_color_rgb(65, 29, 49);
+
+
 // Transitions
 fadeInPercent = 10;//0.4;
 fadeOutPercent = 10;//0.5;

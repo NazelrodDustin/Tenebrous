@@ -6,9 +6,9 @@ worldTiles = array_create(0);
 surfaceGrassNormal = noone;
 surfaceGrassCorrupt = noone;
 
-for (var i = 0; i < room_width / 32; i++){
-	for (var j = 0; j < room_height / 32; j++){
-		/// Fill array		xIndex,		yIndex,		rotation,	hFlip,			vFlip
+for (var i = 0; i < room_width / 64; i++){
+	for (var j = 0; j < room_height / 64; j++){
+		
 		var seed = 1024;
 		seed += i;
 		seed = seed << 2;
@@ -19,6 +19,7 @@ for (var i = 0; i < room_width / 32; i++){
 		seed -= j;
 		seed = seed << 2;
 		random_set_seed(seed);
-		worldTiles[i][j] = [irandom(7), irandom(7), irandom(3), random(1) > .5, random(1) > .5];
+		/// Fill array		image Index, xOffset						yOffset,		  rotation,		hFlip,			vFlip
+		worldTiles[i][j] = [irandom(63), irandom_range(-63, 63), irandom_range(-63, 63), irandom(360), random(1) > .5, random(1) > .5];
 	}
 }

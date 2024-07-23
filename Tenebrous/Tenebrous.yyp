@@ -54,7 +54,7 @@
     {"id":{"name":"obj_tree","path":"objects/obj_tree/obj_tree.yy",},},
     {"id":{"name":"ps_smear","path":"particles/ps_smear/ps_smear.yy",},},
     {"id":{"name":"rm_baseOverworld","path":"rooms/rm_baseOverworld/rm_baseOverworld.yy",},},
-    {"id":{"name":"rm_startmenu","path":"rooms/rm_startmenu/rm_startmenu.yy",},},
+    {"id":{"name":"rm_startMenu","path":"rooms/rm_startMenu/rm_startMenu.yy",},},
     {"id":{"name":"scr_soundEffects","path":"scripts/scr_soundEffects/scr_soundEffects.yy",},},
     {"id":{"name":"snd_footstep1","path":"sounds/snd_footstep1/snd_footstep1.yy",},},
     {"id":{"name":"snd_footstep2","path":"sounds/snd_footstep2/snd_footstep2.yy",},},
@@ -70,7 +70,7 @@
   "resourceType":"GMProject",
   "resourceVersion":"2.0",
   "RoomOrderNodes":[
-    {"roomId":{"name":"rm_startmenu","path":"rooms/rm_startmenu/rm_startmenu.yy",},},
+    {"roomId":{"name":"rm_startMenu","path":"rooms/rm_startMenu/rm_startMenu.yy",},},
     {"roomId":{"name":"rm_baseOverworld","path":"rooms/rm_baseOverworld/rm_baseOverworld.yy",},},
   ],
   "templateType":"game",

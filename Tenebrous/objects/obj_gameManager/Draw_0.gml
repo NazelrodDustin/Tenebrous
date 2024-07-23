@@ -1,4 +1,21 @@
 // Create Battle view;
+
+if (view_current == 0){
+	with (obj_overworldRoomManager){
+		if (surface_exists(surfaceGrassNormal)){
+			draw_surface(surfaceGrassNormal, 0, room_height);
+		}	
+	}
+}
+
+if (view_current == 1){
+	with (obj_overworldRoomManager){
+		if (surface_exists(surfaceGrassCorrupt)){
+			draw_surface(surfaceGrassCorrupt, 0, room_height);
+		}	
+	}
+}
+
 if (view_current == 4){
 	draw_set_color(battleBG);
 	draw_rectangle(2048, -64, 2048 + 960, 540, false);	

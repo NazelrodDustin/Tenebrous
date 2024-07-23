@@ -53,11 +53,3 @@ if (!surface_exists(surfaceGrassCorrupt)){
 	
 	surface_reset_target();
 }
-
-if (view_current == 0){
-	draw_surface(surfaceGrassNormal, 0, 0);
-}
-
-if (view_current == 1){
-	draw_surface(surfaceGrassCorrupt, 0, room_height);
-}

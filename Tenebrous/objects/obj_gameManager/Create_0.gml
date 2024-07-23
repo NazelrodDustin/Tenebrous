@@ -3,8 +3,10 @@
 
 // Create an array of room arrays [x, y, room]
 randomize();
-global.seed = random_get_seed(); 
-global.roomList = array_create(1, [0, 0, room_duplicate(rm_baseOverworld)]);
+global.gameManager = self;
+global.lastBW = browser_width;
+global.lastBH = browser_height;
+global.seed = random_get_seed();
 global.deltaTime = delta_time / 1000000;
 global.pauseOverworld = false;
 global.playerOverworld = instance_create_depth(-480, 270, 0, obj_playerOverworld);
@@ -112,8 +114,10 @@ function showBattle(){
 	time_source_start(battleInTimeSource);
 	battleCountUp = 0;
 	battlePartSurfaceOffset = 0;
+	battleBGSpriteRotation = random_range(-84305, 84305);
 	battleBGSpriteScale = 0;
 	global.inBattle = true;
+	
 }
 
 
@@ -166,5 +170,3 @@ battlePositions[4] = [[480 + 192, 206 + 96], [480 + 96, 206 - 96], [480 - 96, 20
 battlePosition = 0;
 
 part_system_automatic_draw(battlePartSystem, false);
-
-transition(global.roomList[0][2]);

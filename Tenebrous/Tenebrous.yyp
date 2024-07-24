@@ -56,6 +56,7 @@
     {"id":{"name":"rm_baseOverworld","path":"rooms/rm_baseOverworld/rm_baseOverworld.yy",},},
     {"id":{"name":"rm_startMenu","path":"rooms/rm_startMenu/rm_startMenu.yy",},},
     {"id":{"name":"scr_soundEffects","path":"scripts/scr_soundEffects/scr_soundEffects.yy",},},
+    {"id":{"name":"shd","path":"shaders/shd/shd.yy",},},
     {"id":{"name":"snd_footstep1","path":"sounds/snd_footstep1/snd_footstep1.yy",},},
     {"id":{"name":"snd_footstep2","path":"sounds/snd_footstep2/snd_footstep2.yy",},},
     {"id":{"name":"snd_footstep3","path":"sounds/snd_footstep3/snd_footstep3.yy",},},

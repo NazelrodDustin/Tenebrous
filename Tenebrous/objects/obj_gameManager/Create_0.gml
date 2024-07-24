@@ -146,7 +146,10 @@ function removeBattle(){
 	
 }
 
+normalSurface = noone;
+corruptSurface = noone;
 overworldSurface = noone;
+
 
 
 

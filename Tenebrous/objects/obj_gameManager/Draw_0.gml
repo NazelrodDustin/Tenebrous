@@ -3,9 +3,14 @@
 if (view_current == 0){
 	with (obj_overworldRoomManager){
 		if (surface_exists(surfaceGrassNormal)){
-			draw_surface(surfaceGrassNormal, 0, room_height);
+			draw_surface(surfaceGrassNormal, 0, 0);
 		}	
 	}
+	
+	with (obj_playerOverworld){
+		draw_sprite_ext(sprite_index, image_index, x + xOffset, y + yOffset, 1, 1, rotation, c_white, 1);
+	}
+	
 }
 
 if (view_current == 1){
@@ -14,6 +19,15 @@ if (view_current == 1){
 			draw_surface(surfaceGrassCorrupt, 0, room_height);
 		}	
 	}
+	
+	with (obj_playerOverworld){
+		draw_sprite_ext(sprite_index, image_index, 2048 + x + xOffset, y + yOffset, 1, 1, rotation, c_white, 1);
+	}
+}
+
+if (view_current == 3){
+	shader_set(shd_overworld);
+	
 }
 
 if (view_current == 4){
@@ -59,3 +73,6 @@ if (view_current == 4){
 	draw_surface_ext(battlePartSurface, 2048 - battlePartSurfaceOffset, 100, 1, 1, -22.5, c_white, 1);
 	
 }
+
+
+

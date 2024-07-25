@@ -2,6 +2,29 @@
 // You can write your code in this editor
 
 
+if (!surface_exists(surfaceCorruptMix)){
+	surfaceCorruptMix = surface_create(room_width, room_height);
+}
+
+if (surface_exists(surfaceCorruptMix)){
+	surface_set_target(surfaceCorruptMix); 
+	
+	draw_clear(c_black);
+	with (all){
+		
+		
+		
+		if (variable_instance_exists(self, "corruptionPartSystem")){
+			draw_set_color(c_white);
+			part_system_drawit(corruptionPartSystem);	
+		}
+	}
+		
+	surface_reset_target();
+}
+	
+
+
 if (!surface_exists(surfaceGrassNormal)){
 	surfaceGrassNormal = surface_create(room_width, room_height);
 	

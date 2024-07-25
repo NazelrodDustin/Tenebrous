@@ -14,3 +14,6 @@ if (global.lastBW != browser_width || global.lastBH != browser_height){
 	global.lastBW = browser_width;
 	global.lastBW = browser_height;
 }
+global.cameraPercentCorrupt = averageArray(corruptionValues);
+
+

@@ -20,10 +20,11 @@
   "HTile":false,
   "layers":[
     {"$GMImageLayer":"","%Name":"ce9c1de6-0d7c-4550-9ca1-9f9da18a85e4","blendMode":0,"displayName":"default","isLocked":false,"name":"ce9c1de6-0d7c-4550-9ca1-9f9da18a85e4","opacity":100.0,"resourceType":"GMImageLayer","resourceVersion":"2.0","visible":true,},
+    {"$GMImageLayer":"","%Name":"1b6ab454-d750-4c9e-95c9-fccbb40ce4b8","blendMode":0,"displayName":"Layer 1","isLocked":false,"name":"1b6ab454-d750-4c9e-95c9-fccbb40ce4b8","opacity":100.0,"resourceType":"GMImageLayer","resourceVersion":"2.0","visible":true,},
   ],
   "name":"spr_circleFade",
   "nineSlice":null,
-  "origin":0,
+  "origin":4,
   "parent":{
     "name":"World Brushes",
     "path":"folders/Sprites/World Brushes.yy",
@@ -75,8 +76,8 @@
     ],
     "visibleRange":null,
     "volume":1.0,
-    "xorigin":0,
-    "yorigin":0,
+    "xorigin":16,
+    "yorigin":16,
   },
   "swatchColours":null,
   "swfPrecision":0.5,

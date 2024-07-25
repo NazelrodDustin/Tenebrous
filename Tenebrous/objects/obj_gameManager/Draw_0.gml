@@ -1,12 +1,10 @@
 // Create Battle view;
 
 if (view_current == 0){
-	
-	draw_clear(c_black);
-	
-	with (obj_test){
-		draw_set_color(c_white);
-		part_system_drawit(corruptionPartSystem);
+	with (obj_overworldRoomManager){
+		if (surface_exists(surfaceCorruptMix)){
+			draw_surface(surfaceCorruptMix, 0, -room_height);
+		}
 	}
 }
 
@@ -91,4 +89,22 @@ if (view_current == 4){
 }
 
 
+if (view_current == 7){
+	if (!surface_exists(surfaceCorruptPercent)){
+		surfaceCorruptPercent = surface_create(1, 1);	
+	}
+	
+	if (surface_exists(surfaceCorruptPercent) && surface_exists(mixSurface)){
+		
+		surface_set_target(surfaceCorruptPercent);
+		shader_set(shd_corruptionPercent);
+		
+		texture_set_stage(shader_get_sampler_index(shd_corruptionPercent, "corruptionMap"), surface_get_texture(mixSurface));
+		draw_rectangle(0, 0, 1, 1, false);
+		 
+		shader_reset();	
+		
 
+		surface_reset_target();
+	}
+}

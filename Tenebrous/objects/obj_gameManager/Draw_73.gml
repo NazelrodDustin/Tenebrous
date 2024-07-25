@@ -18,4 +18,6 @@ if (view_current == 7){
 	}
 	
 	draw_text(room_width + 20, 1640, string("FPS: {0}", fps_real));
+	
+	draw_text(room_width + 20, 1680, string("Corrupton: {0}%", global.cameraPercentCorrupt * 100));
 }

@@ -10,6 +10,7 @@ global.seed = random_get_seed();
 global.deltaTime = delta_time / 1000000;
 global.pauseOverworld = false;
 global.playerOverworld = instance_create_depth(-480, 270, 0, obj_playerOverworld);
+global.cameraPercentCorrupt = 0;
 
 global.drawX = -960;
 global.drawY = 0;
@@ -24,6 +25,8 @@ global.grassCorruptedSplashColor = make_color_rgb(65, 29, 49);
 // Overworld
 overworldSurfacePosition = 0;
 inOverworld = true;
+corruptionValues = array_create(15, 0);
+corruptionValuesIndex = 0;
 global.inBattle = false;
 
 // Battle In
@@ -92,6 +95,10 @@ corruptSurface = noone;
 overworldSurface = noone;
 
 
+surfaceCorruptPercent = noone;
+bufferCorruptPercent = buffer_create(4, buffer_fixed, 1);
+
+
 
 
 // Battle Smear
@@ -116,13 +123,13 @@ battlePosition = 0;
 part_system_automatic_draw(battlePartSystem, false);
 
 #region Transitions
-fadeInPercent = 0.4;
-fadeOutPercent = 0.5;
+fadeInPercent = 10000;// 0.4;
+fadeOutPercent = 10000;//0.5;
 transitionAlpha = 0.0;
 transitionStarted = false;
 fullyOcluded = false;
 timeOcluded = 0; // MS
-timeToOclude = 1; // Seconds
+timeToOclude = 0.1;//1; // Seconds
 transitionRoom = noone;
 firstTransition = false;
 
@@ -177,3 +184,21 @@ function transition(_room){
 	time_source_start(transitionTimeSource);
 }
 #endregion
+
+
+corruptionValueTimesource = time_source_create(time_source_global, 15, time_source_units_frames, function(){
+	if (!buffer_exists(bufferCorruptPercent)){
+		bufferCorruptPercent = buffer_create(4, buffer_fixed, 1);	
+	}
+	
+	if (surface_exists(surfaceCorruptPercent) && buffer_exists(bufferCorruptPercent)){
+		buffer_get_surface(bufferCorruptPercent, surfaceCorruptPercent, 0);
+		buffer_seek(bufferCorruptPercent, buffer_seek_start, 0);
+		
+		corruptionValues[corruptionValuesIndex] = buffer_read(bufferCorruptPercent, buffer_u8) / 255;
+	}
+	corruptionValuesIndex++;
+	corruptionValuesIndex = corruptionValuesIndex % array_length(corruptionValues);
+}, [], -1);
+
+time_source_start(corruptionValueTimesource);

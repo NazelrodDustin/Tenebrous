@@ -21,5 +21,12 @@ for (var i = 0; i < room_width / 64; i++){
 		random_set_seed(seed);
 		/// Fill array		image Index, xOffset						yOffset,		  rotation,		hFlip,			vFlip
 		worldTiles[i][j] = [irandom(63), irandom_range(-63, 63), irandom_range(-63, 63), irandom(360), random(1) > .5, random(1) > .5];
+		
+	}
+}
+
+for (var i = 0; i < room_width / 512; i++){
+	for (var j = 0; j < room_height / 512; j++){
+		instance_create_depth(i * 512 + 256, j * 512 + 256 - room_height, 0, obj_test);
 	}
 }

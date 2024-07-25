@@ -9,9 +9,7 @@ if (!surface_exists(surfaceGrassNormal)){
 	draw_clear(global.grassRegularBaseColor);
 	for (var i = 0; i < array_length(worldTiles); i++){
 		for (var j = 0; j < array_length(worldTiles[i]); j++){
-			show_debug_message(worldTiles[i][j]);
 			var thisTile = worldTiles[i][j];
-			show_debug_message(thisTile);
 			draw_sprite_ext(spr_grassSplash,
 							thisTile[0], 
 							(i * 64) + thisTile[1], 
@@ -35,9 +33,7 @@ if (!surface_exists(surfaceGrassCorrupt)){
 	draw_clear(global.grassCorruptedBaseColor);
 	for (var i = 0; i < array_length(worldTiles); i++){
 		for (var j = 0; j < array_length(worldTiles[i]); j++){
-			show_debug_message(worldTiles[i][j]);
 			var thisTile = worldTiles[i][j];
-			show_debug_message(thisTile);
 			draw_sprite_ext(spr_grassSplash,
 							thisTile[0], 
 							(i * 64) + thisTile[1], 

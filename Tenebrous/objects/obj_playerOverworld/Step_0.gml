@@ -33,7 +33,7 @@ if (!global.pauseOverworld && (xAmt != 0 || yAmt != 0)){
 
 if (moving || (movementProgress % 1) > 0){
 	movementProgress += 2 * global.deltaTime;
-	yOffset = animcurve_channel_evaluate(animcurve_get_channel(anc_walk, "yOffset"), movementProgress / 2);
+	yOffset = round(animcurve_channel_evaluate(animcurve_get_channel(anc_walk, "yOffset"), movementProgress / 2));
 	if (image_index == 0 || image_index == 2){
 		xOffset = animcurve_channel_evaluate(animcurve_get_channel(anc_walk, "xOffset"), movementProgress / 2);
 		rotation = animcurve_channel_evaluate(animcurve_get_channel(anc_walk, "rotation"), movementProgress / 2);
@@ -66,4 +66,5 @@ if (abs(yOffset) < 0.25 && !soundPlayed){
 }
 
 audio_listener_position(x, y, 0);
+
 

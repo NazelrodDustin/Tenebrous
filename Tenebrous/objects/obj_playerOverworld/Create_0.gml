@@ -12,3 +12,4 @@ movementProgress = 0;
 
 soundFootStep = new soundEffect("snd_footstep", 1, .1, .01);
 
+radius = irandom_range(25, 50);

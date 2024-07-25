@@ -11,6 +11,8 @@ global.deltaTime = delta_time / 1000000;
 global.pauseOverworld = false;
 global.playerOverworld = instance_create_depth(-480, 270, 0, obj_playerOverworld);
 
+global.drawX = -960;
+global.drawY = 0;
 
 // Colors
 global.grassRegularBaseColor = make_color_rgb(70, 130, 50);
@@ -18,68 +20,6 @@ global.grassRegularSplashColor = make_color_rgb(37, 86, 46);
 global.grassCorruptedBaseColor = make_color_rgb(36, 21, 39);
 global.grassCorruptedSplashColor = make_color_rgb(65, 29, 49);
 
-
-// Transitions
-fadeInPercent = 10;//0.4;
-fadeOutPercent = 10;//0.5;
-transitionAlpha = 0.0;
-transitionStarted = false;
-fullyOcluded = false;
-timeOcluded = 0; // MS
-timeToOclude = .1;//1; // Seconds
-transitionRoom = noone;
-firstTransition = false;
-
-transitionTimeSource = time_source_create(time_source_global, 1, time_source_units_frames, function(){
-	if (!transitionStarted){
-		transitionStarted = true;
-		global.pauseOverworld = true;
-	}
-	
-	if (transitionStarted && !fullyOcluded){
-		transitionAlpha += fadeInPercent * global.deltaTime;
-		if (transitionAlpha >= 1){
-			transitionAlpha = 1;
-			fullyOcluded = true;
-
-		}	
-	}else if (fullyOcluded && !(timeOcluded >= timeToOclude)){
-		if (timeOcluded <= 0){
-			room_goto(transitionRoom);
-		}
-		
-		timeOcluded += global.deltaTime;
-	}else{
-		
-		if (!firstTransition && transitionAlpha >= 1){
-			firstTransition = true;
-
-			
-			global.playerOverworld.x = room_width / 2 + irandom_range(-room_width / 4, room_width / 4);
-			global.playerOverworld.y = room_height / 2 + irandom_range(-room_height / 4, room_height / 4);
-			camera_set_view_target(view_camera[0], global.playerOverworld);
-		}
-		transitionAlpha -= fadeOutPercent * global.deltaTime;
-		
-		if (transitionAlpha < 0.6){
-			global.pauseOverworld = false;	
-		}
-		
-		if (transitionAlpha <= 0){
-			transitionAlpha = 0;
-			time_source_stop(transitionTimeSource);
-		}	
-	}
-}, [], -1);
-
-function transition(_room){
-	transitionRoom = _room;
-	transitionAlpha = 0.0;
-	transitionStarted = false;
-	fullyOcluded = false;
-	timeOcluded = 0; // MS
-	time_source_start(transitionTimeSource);
-}
 
 // Overworld
 overworldSurfacePosition = 0;
@@ -146,6 +86,7 @@ function removeBattle(){
 	
 }
 
+mixSurface = noone;
 normalSurface = noone;
 corruptSurface = noone;
 overworldSurface = noone;
@@ -173,3 +114,66 @@ battlePositions[4] = [[480 + 192, 206 + 96], [480 + 96, 206 - 96], [480 - 96, 20
 battlePosition = 0;
 
 part_system_automatic_draw(battlePartSystem, false);
+
+#region Transitions
+fadeInPercent = 0.4;
+fadeOutPercent = 0.5;
+transitionAlpha = 0.0;
+transitionStarted = false;
+fullyOcluded = false;
+timeOcluded = 0; // MS
+timeToOclude = 1; // Seconds
+transitionRoom = noone;
+firstTransition = false;
+
+transitionTimeSource = time_source_create(time_source_global, 1, time_source_units_frames, function(){
+	if (!transitionStarted){
+		transitionStarted = true;
+		global.pauseOverworld = true;
+	}
+	
+	if (transitionStarted && !fullyOcluded){
+		transitionAlpha += fadeInPercent * global.deltaTime;
+		if (transitionAlpha >= 1){
+			transitionAlpha = 1;
+			fullyOcluded = true;
+
+		}	
+	}else if (fullyOcluded && !(timeOcluded >= timeToOclude)){
+		if (timeOcluded <= 0){
+			room_goto(transitionRoom);
+		}
+		
+		timeOcluded += global.deltaTime;
+	}else{
+		
+		if (!firstTransition && transitionAlpha >= 1){
+			firstTransition = true;
+
+			
+			global.playerOverworld.x = room_width / 2 + irandom_range(-room_width / 4, room_width / 4);
+			global.playerOverworld.y = room_height / 2 + irandom_range(-room_height / 4, room_height / 4);
+			camera_set_view_target(view_camera[0], global.playerOverworld);
+		}
+		transitionAlpha -= fadeOutPercent * global.deltaTime;
+		
+		if (transitionAlpha < 0.6){
+			global.pauseOverworld = false;	
+		}
+		
+		if (transitionAlpha <= 0){
+			transitionAlpha = 0;
+			time_source_stop(transitionTimeSource);
+		}	
+	}
+}, [], -1);
+
+function transition(_room){
+	transitionRoom = _room;
+	transitionAlpha = 0.0;
+	transitionStarted = false;
+	fullyOcluded = false;
+	timeOcluded = 0; // MS
+	time_source_start(transitionTimeSource);
+}
+#endregion

@@ -1,7 +1,7 @@
 {
   "$GMShader":"",
-  "%Name":"shd",
-  "name":"shd",
+  "%Name":"shd_overworld",
+  "name":"shd_overworld",
   "parent":{
     "name":"Shaders",
     "path":"folders/Shaders.yy",

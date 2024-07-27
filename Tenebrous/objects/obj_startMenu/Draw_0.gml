@@ -23,6 +23,7 @@ if (view_current == 7){
 		draw_set_alpha(1);
 		surface_reset_target();
 	
-		draw_surface(menuSurface, room_width, 1620);
+		draw_surface(menuSurface, global.drawX, global.drawY);
 	}
 }
+

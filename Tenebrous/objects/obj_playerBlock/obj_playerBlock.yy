@@ -1,11 +1,9 @@
 {
   "$GMObject":"",
-  "%Name":"obj_tree",
-  "eventList":[
-    {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":0,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
-  ],
+  "%Name":"obj_playerBlock",
+  "eventList":[],
   "managed":true,
-  "name":"obj_tree",
+  "name":"obj_playerBlock",
   "overriddenProperties":[],
   "parent":{
     "name":"Overworld",
@@ -28,11 +26,11 @@
   "properties":[],
   "resourceType":"GMObject",
   "resourceVersion":"2.0",
-  "solid":false,
+  "solid":true,
   "spriteId":{
     "name":"spr_placeholder",
     "path":"sprites/spr_placeholder/spr_placeholder.yy",
   },
   "spriteMaskId":null,
-  "visible":true,
+  "visible":false,
 }

@@ -3,3 +3,5 @@
 
 surface_free(surfaceGrassNormal);
 surface_free(surfaceGrassCorrupt);
+
+global.roomsCleared++;

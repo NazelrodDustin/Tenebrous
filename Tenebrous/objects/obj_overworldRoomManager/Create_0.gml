@@ -7,19 +7,23 @@ surfaceGrassNormal = noone;
 surfaceGrassCorrupt = noone;
 surfaceCorruptMix = noone;
 
+sprite_index = noone;
+
+seed = global.roomsCleared * irandom_range(-8192, 8192);
+
+
 for (var i = 0; i < room_width / 64; i++){
 	for (var j = 0; j < room_height / 64; j++){
-		
-		var seed = 1024;
-		seed += i;
-		seed = seed << 5;
-		seed += j;
-		seed = seed << 6;
-		seed -= i;
-		seed = seed << 7;
-		seed -= j;
-		seed = seed << 8;
-		random_set_seed(seed);
+		var grassSeed = seed;
+		grassSeed += i;
+		grassSeed = grassSeed << 5;
+		grassSeed += j;
+		grassSeed = grassSeed << 6;
+		grassSeed -= i;
+		grassSeed = grassSeed << 7;
+		grassSeed -= j;
+		grassSeed = grassSeed << 8; 
+		random_set_seed(grassSeed);
 		/// Fill array		image Index, xOffset						yOffset,		  rotation,		hFlip,			vFlip
 		worldTiles[i][j] = [irandom(63), irandom_range(-63, 63), irandom_range(-63, 63), irandom(360), random(1) > .5, random(1) > .5];
 		

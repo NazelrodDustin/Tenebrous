@@ -1,6 +1,6 @@
 
 moveSpeed = 5;
-collisionList = [obj_tree];
+collisionList = [obj_playerBlock];
 image_speed = 0;
 
 xOffset = 0;

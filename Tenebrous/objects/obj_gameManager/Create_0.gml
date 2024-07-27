@@ -11,6 +11,7 @@ global.deltaTime = delta_time / 1000000;
 global.pauseOverworld = false;
 global.playerOverworld = instance_create_depth(-480, 270, 0, obj_playerOverworld);
 global.cameraPercentCorrupt = 0;
+global.roomsCleared = 0;
 
 global.drawX = -960;
 global.drawY = 0;
@@ -123,15 +124,20 @@ battlePosition = 0;
 part_system_automatic_draw(battlePartSystem, false);
 
 #region Transitions
-fadeInPercent = 10000;// 0.4;
-fadeOutPercent = 10000;//0.5;
+fadeInPercent = 0.4;
+fadeOutPercent = 0.5;
 transitionAlpha = 0.0;
 transitionStarted = false;
 fullyOcluded = false;
 timeOcluded = 0; // MS
-timeToOclude = 0.1;//1; // Seconds
+timeToOclude = 1; // Seconds
 transitionRoom = noone;
 firstTransition = false;
+
+// DEBUG 
+fadeInPercent = 10000;// 0.4;
+fadeOutPercent = 10000;//0.5;
+timeToOclude = 0.1;//1; // Seconds
 
 transitionTimeSource = time_source_create(time_source_global, 1, time_source_units_frames, function(){
 	if (!transitionStarted){
@@ -158,8 +164,8 @@ transitionTimeSource = time_source_create(time_source_global, 1, time_source_uni
 			firstTransition = true;
 
 			
-			global.playerOverworld.x = room_width / 2 + irandom_range(-room_width / 4, room_width / 4);
-			global.playerOverworld.y = room_height / 2 + irandom_range(-room_height / 4, room_height / 4);
+			global.playerOverworld.x = 96;//room_width / 2 + irandom_range(-room_width / 4, room_width / 4);
+			global.playerOverworld.y = 96;//room_height / 2 + irandom_range(-room_height / 4, room_height / 4);
 			camera_set_view_target(view_camera[0], global.playerOverworld);
 		}
 		transitionAlpha -= fadeOutPercent * global.deltaTime;
@@ -187,18 +193,20 @@ function transition(_room){
 
 
 corruptionValueTimesource = time_source_create(time_source_global, 15, time_source_units_frames, function(){
-	if (!buffer_exists(bufferCorruptPercent)){
-		bufferCorruptPercent = buffer_create(4, buffer_fixed, 1);	
-	}
+	if (!global.pauseOverworld){
+		if (!buffer_exists(bufferCorruptPercent)){
+			bufferCorruptPercent = buffer_create(4, buffer_fixed, 1);	
+		}
 	
-	if (surface_exists(surfaceCorruptPercent) && buffer_exists(bufferCorruptPercent)){
-		buffer_get_surface(bufferCorruptPercent, surfaceCorruptPercent, 0);
-		buffer_seek(bufferCorruptPercent, buffer_seek_start, 0);
+		if (surface_exists(surfaceCorruptPercent) && buffer_exists(bufferCorruptPercent)){
+			buffer_get_surface(bufferCorruptPercent, surfaceCorruptPercent, 0);
+			buffer_seek(bufferCorruptPercent, buffer_seek_start, 0);
 		
-		corruptionValues[corruptionValuesIndex] = buffer_read(bufferCorruptPercent, buffer_u8) / 255;
+			corruptionValues[corruptionValuesIndex] = buffer_read(bufferCorruptPercent, buffer_u8) / 255;
+		}
+		corruptionValuesIndex++;
+		corruptionValuesIndex = corruptionValuesIndex % array_length(corruptionValues);
 	}
-	corruptionValuesIndex++;
-	corruptionValuesIndex = corruptionValuesIndex % array_length(corruptionValues);
 }, [], -1);
 
 time_source_start(corruptionValueTimesource);

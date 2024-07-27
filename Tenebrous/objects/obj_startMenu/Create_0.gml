@@ -5,3 +5,5 @@ timeOnScreen = 0;
 started = false;
 menuSurface = noone;
 screenOffset = 40;
+
+global.roomsCleared = 0;

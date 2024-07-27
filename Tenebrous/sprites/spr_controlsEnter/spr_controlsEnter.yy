@@ -26,8 +26,8 @@
   "nineSlice":null,
   "origin":9,
   "parent":{
-    "name":"World Brushes",
-    "path":"folders/Sprites/World Brushes.yy",
+    "name":"Controls",
+    "path":"folders/Sprites/Controls.yy",
   },
   "preMultiplyAlpha":false,
   "resourceType":"GMSprite",

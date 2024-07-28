@@ -1,7 +1,6 @@
 /// @description Insert description here
 // You can write your code in this editor
 
-// Create an array of room arrays [x, y, room]
 randomize();
 global.gameManager = self;
 global.lastBW = browser_width;
@@ -29,6 +28,11 @@ inOverworld = true;
 corruptionValues = array_create(15, 0);
 corruptionValuesIndex = 0;
 global.inBattle = false;
+
+voidPartSystem = part_system_create(ps_void);
+part_system_position(voidPartSystem, -980 / 2, 540 * 7 + (540 / 2));
+part_system_automatic_draw(voidPartSystem, false);
+
 
 // Battle In
 battleAppearTime = 1.5; // Seconds
@@ -102,14 +106,17 @@ bufferCorruptPercent = buffer_create(4, buffer_fixed, 1);
 
 
 
-// Battle Smear
+// Battle setup
 battleSurface = noone;
 battlePartSystem = part_system_create(ps_smear);
+battleVoidPartSystem = part_system_create(ps_void);
 battlePartSurface = noone;
 battlePartSurfaceOffset = 0;
 battleBGSpriteScale = 0;
 battleBGSpriteRotation = random_range(-84305, 84305);
-battleBG = make_color_rgb(30, 29, 57);
+battleBG = global.grassCorruptedBaseColor;
+battleVoid = global.grassCorruptedSplashColor;
+battlePortalC0 = make_color_rgb(30, 29, 57);
 battlePortalC1 = make_color_rgb(117, 36, 56);
 battlePortalC2 = make_color_rgb(57, 74, 80);
 battlePortalC3 = make_color_rgb(129, 151, 150);
@@ -122,6 +129,9 @@ battlePositions[4] = [[480 + 192, 206 + 96], [480 + 96, 206 - 96], [480 - 96, 20
 battlePosition = 0;
 
 part_system_automatic_draw(battlePartSystem, false);
+part_system_automatic_draw(battleVoidPartSystem, false);
+part_system_position(battleVoidPartSystem, -960 / 2, 540 * 4 + (540 / 2));
+
 
 #region Transitions
 fadeInPercent = 0.4;
@@ -135,9 +145,9 @@ transitionRoom = noone;
 firstTransition = false;
 
 // DEBUG 
-fadeInPercent = 10000;// 0.4;
-fadeOutPercent = 10000;//0.5;
-timeToOclude = 0.1;//1; // Seconds
+//fadeInPercent = 10000;// 0.4;
+//fadeOutPercent = 10000;//0.5;
+//timeToOclude = 0.1;//1; // Seconds
 
 transitionTimeSource = time_source_create(time_source_global, 1, time_source_units_frames, function(){
 	if (!transitionStarted){

@@ -6,7 +6,7 @@ image_speed = 0;
 xOffset = 0;
 yOffset = 0;
 rotation = 0;
-soundPlayed = false;
+footStepPlayed = true;
 moving = false;
 movementProgress = 0;
 

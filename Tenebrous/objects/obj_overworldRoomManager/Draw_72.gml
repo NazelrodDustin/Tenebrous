@@ -1,7 +1,5 @@
 /// @description Insert description here
-// You can write your code in this editor
-
-draw_point(-10000, -10000);
+// You can write your code in this editor\
 
 if (!sprite_exists(sprite_index)){
 	var spriteSurface = surface_create(room_width, room_height);
@@ -11,8 +9,6 @@ if (!sprite_exists(sprite_index)){
 	random_set_seed(seed);
 	
 	gpu_set_blendmode(bm_add);
-	//gpu_set_blendmode(bm_min);
-	//gpu_set_blendmode_ext(bm_src_alpha, bm_inv_dest_alpha)
 	
 	for (var i = 0; i < room_height; i += 16){
 		draw_sprite(spr_circleFade, 0, i, irandom_range(-4, 8));	
@@ -29,7 +25,7 @@ if (!sprite_exists(sprite_index)){
 	sprite_collision_mask(sprite_index, false, bboxmode_automatic, 0, 0, room_width, room_height, bboxkind_precise, 0)
 	image_xscale = room_width / sprite_width;
 	image_yscale = room_height / sprite_height;
-	image_alpha = 1;
+	image_alpha = 0;
 }
 
 if (!surface_exists(surfaceCorruptMix)){
@@ -102,3 +98,5 @@ if (!surface_exists(surfaceGrassCorrupt)){
 	
 	surface_reset_target();
 }
+
+draw_point(-10000, -10000);

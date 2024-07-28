@@ -57,13 +57,13 @@ if (global.inBattle){
 	image_index = 2;
 }
 
-if (abs(yOffset) > 2 && soundPlayed){
-	soundPlayed = false;	
+if (abs(yOffset) > 2 && footStepPlayed){
+	footStepPlayed = false;	
 }
 
-if (abs(yOffset) < 0.25 && !soundPlayed){
+if (abs(yOffset) < 0.25 && !footStepPlayed){
 	soundFootStep.play(x, y, true);
-	soundPlayed = true;
+	footStepPlayed = true;
 }
 
 audio_listener_position(x, y, 0);

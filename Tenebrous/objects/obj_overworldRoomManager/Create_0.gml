@@ -9,6 +9,7 @@ surfaceCorruptMix = noone;
 
 sprite_index = noone;
 
+random_set_seed(global.seed);
 seed = global.roomsCleared * irandom_range(-8192, 8192);
 
 
@@ -30,8 +31,8 @@ for (var i = 0; i < room_width / 64; i++){
 	}
 }
 
-for (var i = 0; i < room_width / 512; i++){
-	for (var j = 0; j < room_height / 512; j++){
-		instance_create_depth(i * 512 + 256, j * 512 + 256, 0, obj_test);
-	}
+random_set_seed(seed)
+var houseCount = irandom_range(4, 6);
+for (var i = 0; i < houseCount; i++){
+	instance_create_layer(random_range(room_width / 2 - room_width / 4, room_width / 2 + room_width / 4), random_range(room_height / 2 - room_height / 4, room_height / 2 + room_height / 4), "Instances", obj_house);	
 }

@@ -3,6 +3,7 @@
 if (view_current == 0){
 	with (obj_overworldRoomManager){
 		if (surface_exists(surfaceCorruptMix)){
+			draw_clear(c_black);
 			draw_surface(surfaceCorruptMix, 0, -room_height);
 		}
 	}

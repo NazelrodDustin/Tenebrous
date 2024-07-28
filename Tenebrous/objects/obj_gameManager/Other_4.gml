@@ -33,7 +33,7 @@ camera_set_view_size(view_camera[7], 960, 540);
 camera_set_begin_script(view_camera[0], function(){
 	camera_set_view_pos(view_camera[0], global.playerOverworld.x - (camera_get_view_width(view_camera[0]) / 2), global.playerOverworld.y - (camera_get_view_height(view_camera[0]) / 2) - room_height);
 	if (!surface_exists(mixSurface)){
-		mixSurface = surface_create(960, 540, surface_r8unorm);
+		mixSurface = surface_create(960, 540);
 	}
 	
 	view_surface_id[0] = mixSurface;

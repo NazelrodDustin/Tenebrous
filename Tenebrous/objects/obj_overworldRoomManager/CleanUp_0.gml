@@ -1,7 +1,10 @@
 /// @description Insert description here
 // You can write your code in this editor
 
-surface_free(surfaceGrassNormal);
-surface_free(surfaceGrassCorrupt);
+if (surface_exists(surfaceGrassNormal)){
+	surface_free(surfaceGrassNormal);
+}
 
-global.roomsCleared++;
+if (surface_exists(surfaceGrassCorrupt)){
+	surface_free(surfaceGrassCorrupt);
+}

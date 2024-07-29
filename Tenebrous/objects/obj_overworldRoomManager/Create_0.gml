@@ -36,3 +36,9 @@ var houseCount = irandom_range(4, 6);
 for (var i = 0; i < houseCount; i++){
 	instance_create_layer(random_range(room_width / 2 - room_width / 4, room_width / 2 + room_width / 4), random_range(room_height / 2 - room_height / 4, room_height / 2 + room_height / 4), "Instances", obj_house);	
 }
+
+
+global.playerOverworld.x = random_range(room_width / 2 - room_width / 4, room_width / 2 + room_width / 4);
+global.playerOverworld.y = random_range(room_height / 2 - room_height / 4, room_height / 2 + room_height / 4);
+
+

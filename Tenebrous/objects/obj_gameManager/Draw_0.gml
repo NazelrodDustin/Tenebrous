@@ -14,17 +14,21 @@ if (view_current == 1){
 		if (surface_exists(surfaceGrassNormal)){
 			draw_surface(surfaceGrassNormal, 0, 0);
 		}
+		
+		gpu_set_blendmode(bm_subtract);
+		draw_sprite_ext(sprite_index, 0, 0, 0, 1, 1, 0, c_black, 1);
+		gpu_set_blendmode(bm_normal);
 	}
 	
 	with (obj_playerOverworld){
 		draw_sprite_ext(sprite_index, image_index, x + xOffset, y + yOffset, 1, 1, rotation, c_white, 1);	
 	}
 	
-	with (obj_overworldRoomManager){
-		gpu_set_blendmode(bm_subtract);
-		draw_sprite_ext(sprite_index, 0, 0, 0, 1, 1, 0, c_black, 1);
-		gpu_set_blendmode(bm_normal);
+	with (obj_house){
+		draw_sprite_ext(sprite_index, corrupted, x, y, 1, 1, 0, c_white, 1);	
 	}
+	
+
 }
 
 if (view_current == 2){
@@ -32,17 +36,21 @@ if (view_current == 2){
 		if (surface_exists(surfaceGrassCorrupt)){
 			draw_surface(surfaceGrassCorrupt, 0, room_height);
 		}
+	
+		gpu_set_blendmode(bm_subtract);
+		draw_sprite_ext(sprite_index, 0, 0, room_height, 1, 1, 0, c_black, 1);
+		gpu_set_blendmode(bm_normal);
 	}
 	
 	with (obj_playerOverworld){
 		draw_sprite_ext(sprite_index, image_index, x + xOffset, room_height + y + yOffset, 1, 1, rotation, c_gray, 1);
 	}
 	
-	with (obj_overworldRoomManager){
-		gpu_set_blendmode(bm_subtract);
-		draw_sprite_ext(sprite_index, 0, 0, room_height, 1, 1, 0, c_black, 1);
-		gpu_set_blendmode(bm_normal);
+	with (obj_house){
+		draw_sprite_ext(sprite_index, corrupted, x, room_height + y, 1, 1, 0, c_white, 1);
 	}
+	
+
 }
 
 if (view_current == 3){

@@ -2,15 +2,21 @@
 // You can write your code in this editor
 
 randomize();
+
 global.gameManager = self;
 global.lastBW = browser_width;
 global.lastBH = browser_height;
-global.seed = random_get_seed();
 global.deltaTime = delta_time / 1000000;
+
+global.seed = random_get_seed();
+
 global.pauseOverworld = true;
-global.playerOverworld = instance_create_depth(-480, 270, 0, obj_playerOverworld);
-global.cameraPercentCorrupt = 0;
+global.inBattle = false;
+
 global.roomsCleared = 0;
+
+global.playerOverworld = instance_create_depth(480, 270, 0, obj_playerOverworld);
+global.cameraPercentCorrupt = 0;
 
 global.drawX = -960;
 global.drawY = 0;
@@ -24,7 +30,6 @@ global.grassCorruptedSplashColor = make_color_rgb(65, 29, 49);
 
 // Overworld
 overworldSurfacePosition = 0;
-inOverworld = true;
 corruptionValues = array_create(15, 0);
 corruptionValuesIndex = 0;
 global.inBattle = false;
@@ -141,7 +146,7 @@ transitionStarted = false;
 fullyOcluded = false;
 timeOcluded = 0; // MS
 timeToOclude = 1; // Seconds
-transitionRoom = noone;
+transitionCallback = function(){};
 firstTransition = false;
 
 // DEBUG 
@@ -164,20 +169,11 @@ transitionTimeSource = time_source_create(time_source_global, 1, time_source_uni
 		}	
 	}else if (fullyOcluded && !(timeOcluded >= timeToOclude)){
 		if (timeOcluded <= 0){
-			room_goto(transitionRoom);
+			transitionCallback();
 		}
 		
 		timeOcluded += global.deltaTime;
 	}else{
-		
-		if (!firstTransition && transitionAlpha >= 1){
-			firstTransition = true;
-
-			
-			global.playerOverworld.x = 96;//room_width / 2 + irandom_range(-room_width / 4, room_width / 4);
-			global.playerOverworld.y = 96;//room_height / 2 + irandom_range(-room_height / 4, room_height / 4);
-			camera_set_view_target(view_camera[0], global.playerOverworld);
-		}
 		transitionAlpha -= fadeOutPercent * global.deltaTime;
 		
 		if (transitionAlpha < 0.6){
@@ -187,12 +183,13 @@ transitionTimeSource = time_source_create(time_source_global, 1, time_source_uni
 		if (transitionAlpha <= 0){
 			transitionAlpha = 0;
 			time_source_stop(transitionTimeSource);
+			transitionCallback = function(){};
 		}	
 	}
 }, [], -1);
 
-function transition(_room){
-	transitionRoom = _room;
+function transition(_callback){
+	transitionCallback = _callback;
 	transitionAlpha = 0.0;
 	transitionStarted = false;
 	fullyOcluded = false;

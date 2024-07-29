@@ -32,7 +32,10 @@
   "resourceType":"GMObject",
   "resourceVersion":"2.0",
   "solid":false,
-  "spriteId":null,
+  "spriteId":{
+    "name":"spr_house",
+    "path":"sprites/spr_house/spr_house.yy",
+  },
   "spriteMaskId":null,
   "visible":true,
 }

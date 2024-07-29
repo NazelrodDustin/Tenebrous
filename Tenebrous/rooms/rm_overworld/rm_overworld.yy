@@ -6,7 +6,6 @@
   "inheritCreationOrder":false,
   "inheritLayers":false,
   "instanceCreationOrder":[
-    {"name":"inst_14D17E64","path":"rooms/rm_overworld/rm_overworld.yy",},
     {"name":"inst_1C5D4DFD","path":"rooms/rm_overworld/rm_overworld.yy",},
     {"name":"inst_19A2A04D","path":"rooms/rm_overworld/rm_overworld.yy",},
     {"name":"inst_4549F3C2","path":"rooms/rm_overworld/rm_overworld.yy",},
@@ -15,7 +14,6 @@
   "isDnd":false,
   "layers":[
     {"$GMRInstanceLayer":"","%Name":"Instances","depth":0,"effectEnabled":true,"effectType":null,"gridX":16,"gridY":16,"hierarchyFrozen":false,"inheritLayerDepth":false,"inheritLayerSettings":false,"inheritSubLayers":true,"inheritVisibility":true,"instances":[
-        {"$GMRInstance":"v1","%Name":"inst_14D17E64","colour":4294967295,"frozen":false,"hasCreationCode":false,"ignore":false,"imageIndex":0,"imageSpeed":1.0,"inheritCode":false,"inheritedItemId":null,"inheritItemSettings":false,"isDnd":false,"name":"inst_14D17E64","objectId":{"name":"obj_overworldRoomManager","path":"objects/obj_overworldRoomManager/obj_overworldRoomManager.yy",},"properties":[],"resourceType":"GMRInstance","resourceVersion":"2.0","rotation":0.0,"scaleX":1.0,"scaleY":1.0,"x":0.0,"y":0.0,},
         {"$GMRInstance":"v1","%Name":"inst_1C5D4DFD","colour":4294967295,"frozen":false,"hasCreationCode":false,"ignore":false,"imageIndex":0,"imageSpeed":1.0,"inheritCode":false,"inheritedItemId":null,"inheritItemSettings":false,"isDnd":false,"name":"inst_1C5D4DFD","objectId":{"name":"obj_playerBlock","path":"objects/obj_playerBlock/obj_playerBlock.yy",},"properties":[],"resourceType":"GMRInstance","resourceVersion":"2.0","rotation":0.0,"scaleX":1.0,"scaleY":64.0,"x":16.0,"y":2048.0,},
         {"$GMRInstance":"v1","%Name":"inst_19A2A04D","colour":4294967295,"frozen":false,"hasCreationCode":false,"ignore":false,"imageIndex":0,"imageSpeed":1.0,"inheritCode":false,"inheritedItemId":null,"inheritItemSettings":false,"isDnd":false,"name":"inst_19A2A04D","objectId":{"name":"obj_playerBlock","path":"objects/obj_playerBlock/obj_playerBlock.yy",},"properties":[],"resourceType":"GMRInstance","resourceVersion":"2.0","rotation":0.0,"scaleX":1.0,"scaleY":64.0,"x":4080.0,"y":2048.0,},
         {"$GMRInstance":"v1","%Name":"inst_4549F3C2","colour":4294967295,"frozen":false,"hasCreationCode":false,"ignore":false,"imageIndex":0,"imageSpeed":1.0,"inheritCode":false,"inheritedItemId":null,"inheritItemSettings":false,"isDnd":false,"name":"inst_4549F3C2","objectId":{"name":"obj_playerBlock","path":"objects/obj_playerBlock/obj_playerBlock.yy",},"properties":[],"resourceType":"GMRInstance","resourceVersion":"2.0","rotation":0.0,"scaleX":64.0,"scaleY":1.0,"x":2048.0,"y":16.0,},

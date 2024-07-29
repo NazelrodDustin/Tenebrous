@@ -98,5 +98,3 @@ if (!surface_exists(surfaceGrassCorrupt)){
 	
 	surface_reset_target();
 }
-
-draw_point(-10000, -10000);

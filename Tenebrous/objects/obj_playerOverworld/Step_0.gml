@@ -24,7 +24,7 @@ if (!global.pauseOverworld && (xAmt != 0 || yAmt != 0)){
 	}
 
 
-	move_and_collide(xMove, yMove, collisionList);
+	move_and_collide(xMove, yMove, collisionList, 3);
 	
 	x = round(x);
 	y = round(y);

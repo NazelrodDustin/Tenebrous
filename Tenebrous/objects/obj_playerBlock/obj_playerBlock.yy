@@ -28,8 +28,8 @@
   "resourceVersion":"2.0",
   "solid":true,
   "spriteId":{
-    "name":"spr_placeholder",
-    "path":"sprites/spr_placeholder/spr_placeholder.yy",
+    "name":"spr_blocker",
+    "path":"sprites/spr_blocker/spr_blocker.yy",
   },
   "spriteMaskId":null,
   "visible":false,

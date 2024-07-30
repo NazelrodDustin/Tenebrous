@@ -20,14 +20,34 @@ if (view_current == 1){
 		gpu_set_blendmode(bm_normal);
 	}
 	
-	with (obj_playerOverworld){
-		draw_sprite_ext(sprite_index, image_index, x + xOffset, y + yOffset, 1, 1, rotation, c_white, 1);	
+	for (var i = 0; i < array_length(drawArray); i++){
+		with (drawArray[i][0]){
+			switch (object_get_name(object_index)){
+				case "obj_playerOverworld":
+					draw_sprite_ext(sprite_index, image_index, x + xOffset, y + yOffset, 1, 1, rotation, c_white, 1);
+					with (obj_corruptibleParent){
+						if (corrupted){
+							var dirDiff = point_direction(other.x, other.y, x, y);
+							draw_sprite_ext(spr_directionIndicator, 0, other.x + lengthdir_x(128, dirDiff), other.y + lengthdir_y(128, dirDiff), 1, 1, dirDiff - 90, c_white, 1 - ((256 - point_distance(other.x, other.y, x, y)) / 256));
+						}
+					}
+					break;
+					
+				case "obj_house":
+					draw_sprite_ext(sprite_index, corrupted, x, y, 1, 1, 0, c_white, 1);
+					break;
+					
+				case "obj_well":
+					draw_sprite_ext(sprite_index, corrupted, x, y, 1, 1, 0, c_white, 1);
+					break;
+					
+				case "obj_enemyPortal":
+					draw_line(x, y, targetPosition[0], targetPosition[1]);
+					draw_sprite_ext(sprite_index, 0, x, y, 1, 1, 0, c_white, 1);
+					break;
+			}
+		}
 	}
-	
-	with (obj_house){
-		draw_sprite_ext(sprite_index, corrupted, x, y, 1, 1, 0, c_white, 1);	
-	}
-	
 
 }
 
@@ -42,15 +62,36 @@ if (view_current == 2){
 		gpu_set_blendmode(bm_normal);
 	}
 	
-	with (obj_playerOverworld){
-		draw_sprite_ext(sprite_index, image_index, x + xOffset, room_height + y + yOffset, 1, 1, rotation, c_gray, 1);
+	for (var i = 0; i < array_length(drawArray); i++){
+		with (drawArray[i][0]){
+		
+			switch (object_get_name(object_index)){
+				case "obj_playerOverworld":
+					draw_sprite_ext(sprite_index, image_index, x + xOffset, room_height + y + yOffset, 1, 1, rotation, c_gray, 1);
+					with (obj_corruptibleParent){
+						if (corrupted){
+							var dirDiff = point_direction(other.x, other.y, x, y);
+							draw_sprite_ext(spr_directionIndicator, 0, other.x + lengthdir_x(128, dirDiff), room_height + other.y + lengthdir_y(128, dirDiff), 1, 1, dirDiff - 90, c_white, 1 - ((256 - point_distance(other.x, other.y, x, y)) / 256));
+						}
+					}
+					break;
+					
+				case "obj_house":
+					draw_sprite_ext(sprite_index, corrupted, x, room_height + y, 1, 1, 0, c_white, 1);
+					break;
+					
+				case "obj_well":
+					draw_sprite_ext(sprite_index, corrupted, x, room_height + y, 1, 1, 0, c_white, 1);
+					break;
+					
+				case "obj_enemyPortal":
+					draw_line(x, room_height + y, targetPosition[0], room_height + targetPosition[1]);
+					draw_rectangle(x - checkSize, room_height + y - checkSize, x + checkSize, room_height + y + checkSize, true);
+					draw_sprite_ext(sprite_index, 0, x, room_height + y, 1, 1, 0, c_white, 1);
+					break;
+			}
+		}
 	}
-	
-	with (obj_house){
-		draw_sprite_ext(sprite_index, corrupted, x, room_height + y, 1, 1, 0, c_white, 1);
-	}
-	
-
 }
 
 if (view_current == 3){
@@ -95,7 +136,7 @@ if (view_current == 4){
 	
 	for (var i = 0; i < array_length(battlePositions[battlePosition]); i++){
 		
-		draw_sprite(spr_placeholder, 0, global.drawX + battlePositions[battlePosition][i][0], global.drawY + battlePositions[battlePosition][i][1]);
+		draw_sprite(spr_player, 0, global.drawX + battlePositions[battlePosition][i][0], global.drawY + battlePositions[battlePosition][i][1]);
 	}
 	
 	// If surface does't exist, create it.

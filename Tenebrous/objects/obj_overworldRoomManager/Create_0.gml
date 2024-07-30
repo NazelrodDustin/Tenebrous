@@ -32,10 +32,26 @@ for (var i = 0; i < room_width / 64; i++){
 }
 
 random_set_seed(seed)
-var houseCount = irandom_range(4, 6);
-for (var i = 0; i < houseCount; i++){
-	instance_create_layer(random_range(room_width / 2 - room_width / 4, room_width / 2 + room_width / 4), random_range(room_height / 2 - room_height / 4, room_height / 2 + room_height / 4), "Instances", obj_house);	
-}
+
+
+var leftCenter = (room_width / 2 - room_width / 4);
+var rightCenter = (room_width / 2 + room_width / 4);
+var topMiddle = (room_height / 2 - room_height / 4);
+var bottomMiddle = (room_height / 2 + room_height / 4);
+
+var variance = room_height / 8;
+
+
+
+
+instance_create_layer(room_width / 2 + irandom_range(-variance, variance), room_height / 2 + irandom_range(-variance, variance), "Instances", obj_well);
+
+instance_create_layer(leftCenter + irandom_range(-variance, variance), topMiddle + irandom_range(-variance, variance), "Instances", obj_house);	
+instance_create_layer(rightCenter + irandom_range(-variance, variance), topMiddle + irandom_range(-variance, variance), "Instances", obj_house);	
+instance_create_layer(leftCenter + irandom_range(-variance, variance), bottomMiddle + irandom_range(-variance, variance), "Instances", obj_house);	
+instance_create_layer(rightCenter + irandom_range(-variance, variance), bottomMiddle + irandom_range(-variance, variance), "Instances", obj_house);
+	
+	
 
 
 global.playerOverworld.x = random_range(room_width / 2 - room_width / 4, room_width / 2 + room_width / 4);

@@ -16,9 +16,12 @@ if (global.lastBW != browser_width || global.lastBH != browser_height){
 }
 global.cameraPercentCorrupt = averageArray(corruptionValues);
 
+drawArray = array_create(1, [global.playerOverworld, global.playerOverworld.y]);
 
-
-with (all){
-		
+with (obj_corruptibleParent){
+	array_push(other.drawArray, [id, y]);
 }
 
+array_sort(drawArray, function(element1, element2){
+	return sign(element1[1] - element2[1]);	
+});

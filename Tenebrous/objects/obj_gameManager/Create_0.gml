@@ -108,6 +108,8 @@ overworldSurface = noone;
 surfaceCorruptPercent = noone;
 bufferCorruptPercent = buffer_create(4, buffer_fixed, 1);
 
+drawArray = noone;
+
 
 
 

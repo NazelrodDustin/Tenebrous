@@ -12,8 +12,8 @@
   "duration":30.70673,
   "name":"snd_playerDamaged3",
   "parent":{
-    "name":"Sound Design",
-    "path":"folders/Sounds/Sound Design.yy",
+    "name":"Damage",
+    "path":"folders/Sounds/Sound Design/Damage.yy",
   },
   "preload":false,
   "resourceType":"GMSound",

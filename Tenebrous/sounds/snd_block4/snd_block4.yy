@@ -12,8 +12,8 @@
   "duration":31.163458,
   "name":"snd_block4",
   "parent":{
-    "name":"Sound Design",
-    "path":"folders/Sounds/Sound Design.yy",
+    "name":"Block",
+    "path":"folders/Sounds/Sound Design/Block.yy",
   },
   "preload":false,
   "resourceType":"GMSound",

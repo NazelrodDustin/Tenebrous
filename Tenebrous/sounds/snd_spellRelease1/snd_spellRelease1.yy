@@ -12,8 +12,8 @@
   "duration":34.634624,
   "name":"snd_spellRelease1",
   "parent":{
-    "name":"Sound Design",
-    "path":"folders/Sounds/Sound Design.yy",
+    "name":"Release",
+    "path":"folders/Sounds/Sound Design/Spell/Release.yy",
   },
   "preload":false,
   "resourceType":"GMSound",

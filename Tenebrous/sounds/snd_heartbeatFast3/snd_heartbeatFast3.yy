@@ -12,8 +12,8 @@
   "duration":0.504812,
   "name":"snd_heartbeatFast3",
   "parent":{
-    "name":"Sound Design",
-    "path":"folders/Sounds/Sound Design.yy",
+    "name":"Fast",
+    "path":"folders/Sounds/Sound Design/Heartbeat/Fast.yy",
   },
   "preload":false,
   "resourceType":"GMSound",

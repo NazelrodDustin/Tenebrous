@@ -12,8 +12,8 @@
   "duration":30.764418,
   "name":"snd_heartbeatSlow1",
   "parent":{
-    "name":"Sound Design",
-    "path":"folders/Sounds/Sound Design.yy",
+    "name":"Slow",
+    "path":"folders/Sounds/Sound Design/Heartbeat/Slow.yy",
   },
   "preload":false,
   "resourceType":"GMSound",

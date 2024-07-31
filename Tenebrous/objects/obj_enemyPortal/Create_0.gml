@@ -3,10 +3,19 @@
 
 // Inherit the parent event
 event_inherited();
-randomize();
-waitTime = random_range(5000, 7500);
-targetPosition = [irandom_range(128, room_width - 128), irandom_range(128, room_height - 128)];
+waitTime = 0
+targetPosition = []
 collisionList = [obj_playerBlock, obj_house, obj_well];
 noMovementCount = 0;
-checkSize = 1;
 moveSpeed = 3;
+image_speed = 0.5;
+image_index = irandom(7);
+encounterSize = 1;
+function setTarget(){
+	waitTime = random_range(5000, 7500);
+	targetPosition = [irandom_range(128, room_width - 128), irandom_range(128, room_height - 128)];
+	
+	checkSize = 1;
+}
+
+setTarget();

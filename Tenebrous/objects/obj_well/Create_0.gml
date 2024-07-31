@@ -4,3 +4,4 @@
 event_inherited();
 
 corruptionSize = 25;
+encounterSize = 1;

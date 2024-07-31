@@ -6,4 +6,7 @@ started = false;
 menuSurface = noone;
 screenOffset = 40;
 
-global.roomsCleared = 0;
+
+if (instance_exists(global.gameManager)){
+	global.gameManager.reset();
+}

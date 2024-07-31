@@ -12,8 +12,8 @@
   "duration":32.471146,
   "name":"snd_confusionSpellHit2",
   "parent":{
-    "name":"Sound Design",
-    "path":"folders/Sounds/Sound Design.yy",
+    "name":"Confusion",
+    "path":"folders/Sounds/Sound Design/Spell/Confusion.yy",
   },
   "preload":false,
   "resourceType":"GMSound",

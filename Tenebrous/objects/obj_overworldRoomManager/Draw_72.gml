@@ -26,9 +26,11 @@ if (!sprite_exists(sprite_index)){
 	image_xscale = room_width / sprite_width;
 	image_yscale = room_height / sprite_height;
 	image_alpha = 0;
+	surface_free(spriteSurface);
 }
 
 if (!surface_exists(surfaceCorruptMix)){
+	show_debug_message("Mix Surface Does Not Exist: Creating It Now");
 	surfaceCorruptMix = surface_create(room_width, room_height);
 }
 
@@ -37,9 +39,6 @@ if (surface_exists(surfaceCorruptMix)){
 	
 	draw_clear(c_black);
 	with (all){
-		
-		
-		
 		if (variable_instance_exists(self, "corruptionPartSystem")){
 			draw_set_color(c_white);
 			part_system_drawit(corruptionPartSystem);	
@@ -52,6 +51,7 @@ if (surface_exists(surfaceCorruptMix)){
 
 
 if (!surface_exists(surfaceGrassNormal)){
+	show_debug_message("Normal Grass Surface Does Not Exist: Creating It Now");
 	surfaceGrassNormal = surface_create(room_width, room_height);
 	
 	surface_set_target(surfaceGrassNormal);
@@ -76,6 +76,7 @@ if (!surface_exists(surfaceGrassNormal)){
 }
 
 if (!surface_exists(surfaceGrassCorrupt)){
+	show_debug_message("Corrupt Grass Surface Does Not Exist: Creating It Now");
 	surfaceGrassCorrupt = surface_create(room_width, room_height);
 	
 	surface_set_target(surfaceGrassCorrupt);

@@ -12,8 +12,8 @@
   "duration":0.668271,
   "name":"snd_heartbeatMedium1",
   "parent":{
-    "name":"Sound Design",
-    "path":"folders/Sounds/Sound Design.yy",
+    "name":"Medium",
+    "path":"folders/Sounds/Sound Design/Heartbeat/Medium.yy",
   },
   "preload":false,
   "resourceType":"GMSound",

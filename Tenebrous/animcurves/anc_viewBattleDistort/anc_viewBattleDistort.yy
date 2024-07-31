@@ -12,6 +12,15 @@
         {"th0":-0.25,"th1":0.1607408,"tv0":0.0,"tv1":0.0,"x":0.0,"y":412.0,},
         {"th0":-0.24595869,"th1":0.25,"tv0":639.0255,"tv1":0.0,"x":1.0,"y":0.0,},
       ],"resourceType":"GMAnimCurveChannel","resourceVersion":"2.0","visible":true,},
+    {"$GMAnimCurveChannel":"","%Name":"UI","colour":4279025727,"name":"UI","points":[
+        {"th0":-0.1,"th1":0.73549616,"tv0":0.0,"tv1":-0.6783447,"x":0.0,"y":284.0,},
+        {"th0":-0.8041985,"th1":0.1,"tv0":-13.530464,"tv1":0.0,"x":1.0,"y":412.0,},
+      ],"resourceType":"GMAnimCurveChannel","resourceVersion":"2.0","visible":true,},
+    {"$GMAnimCurveChannel":"","%Name":"UI Canvas Offset","colour":4279025727,"name":"UI Canvas Offset","points":[
+        {"th0":-0.1,"th1":0.16242065,"tv0":0.0,"tv1":-0.0679574,"x":0.0,"y":0.0,},
+        {"th0":-0.1126978,"th1":0.10756272,"tv0":-0.088224016,"tv1":0.08420408,"x":0.65,"y":0.0,},
+        {"th0":-0.040627003,"th1":0.1,"tv0":-0.08072281,"tv1":0.0,"x":1.0,"y":24.0,},
+      ],"resourceType":"GMAnimCurveChannel","resourceVersion":"2.0","visible":true,},
   ],
   "function":2,
   "name":"anc_viewBattleDistort",

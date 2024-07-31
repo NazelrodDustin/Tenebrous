@@ -12,8 +12,8 @@
   "duration":30.923082,
   "name":"snd_enemySpawn3",
   "parent":{
-    "name":"Sound Design",
-    "path":"folders/Sounds/Sound Design.yy",
+    "name":"Spawn",
+    "path":"folders/Sounds/Sound Design/Spawn.yy",
   },
   "preload":false,
   "resourceType":"GMSound",

@@ -52,8 +52,6 @@ instance_create_layer(leftCenter + irandom_range(-variance, variance), bottomMid
 instance_create_layer(rightCenter + irandom_range(-variance, variance), bottomMiddle + irandom_range(-variance, variance), "Instances", obj_house);
 	
 	
-
-
 global.playerOverworld.x = random_range(room_width / 2 - room_width / 4, room_width / 2 + room_width / 4);
 global.playerOverworld.y = random_range(room_height / 2 - room_height / 4, room_height / 2 + room_height / 4);
 

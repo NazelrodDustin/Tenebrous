@@ -12,8 +12,8 @@
   "duration":32.31731,
   "name":"snd_confusionSpellCast2",
   "parent":{
-    "name":"Sound Design",
-    "path":"folders/Sounds/Sound Design.yy",
+    "name":"Damage",
+    "path":"folders/Sounds/Sound Design/Spell/Damage.yy",
   },
   "preload":false,
   "resourceType":"GMSound",

@@ -12,8 +12,8 @@
   "duration":31.985582,
   "name":"snd_spellChargeUp2",
   "parent":{
-    "name":"Sound Design",
-    "path":"folders/Sounds/Sound Design.yy",
+    "name":"Cast",
+    "path":"folders/Sounds/Sound Design/Spell/Cast.yy",
   },
   "preload":false,
   "resourceType":"GMSound",

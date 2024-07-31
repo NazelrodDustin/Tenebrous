@@ -25,12 +25,6 @@ if (view_current == 1){
 			switch (object_get_name(object_index)){
 				case "obj_playerOverworld":
 					draw_sprite_ext(sprite_index, image_index, x + xOffset, y + yOffset, 1, 1, rotation, c_white, 1);
-					with (obj_corruptibleParent){
-						if (corrupted){
-							var dirDiff = point_direction(other.x, other.y, x, y);
-							draw_sprite_ext(spr_directionIndicator, 0, other.x + lengthdir_x(128, dirDiff), other.y + lengthdir_y(128, dirDiff), 1, 1, dirDiff - 90, c_white, 1 - ((256 - point_distance(other.x, other.y, x, y)) / 256));
-						}
-					}
 					break;
 					
 				case "obj_house":
@@ -42,13 +36,34 @@ if (view_current == 1){
 					break;
 					
 				case "obj_enemyPortal":
-					draw_line(x, y, targetPosition[0], targetPosition[1]);
-					draw_sprite_ext(sprite_index, 0, x, y, 1, 1, 0, c_white, 1);
+					//draw_line(x, y, targetPosition[0], targetPosition[1]);
+					draw_sprite_ext(sprite_index, image_index, x, y, 1, 1, 0, c_white, 1);
 					break;
 			}
 		}
 	}
-
+	
+	with (obj_corruptibleParent){
+		if (corrupted){
+			if (object_get_name(object_index) == "obj_house"){
+				var dirDiff = point_direction(global.playerOverworld.x, global.playerOverworld.y, x, y - 160);
+				draw_sprite_ext(spr_directionIndicator, 0, global.playerOverworld.x + lengthdir_x(128, dirDiff), global.playerOverworld.y + lengthdir_y(128, dirDiff), 1, 1, dirDiff - 90, c_white, 1 - ((256 - (point_distance(global.playerOverworld.x, global.playerOverworld.y, x, y - 160) - 64)) / 256));
+			}else{
+				var dirDiff = point_direction(global.playerOverworld.x, global.playerOverworld.y, x, y);
+				draw_sprite_ext(spr_directionIndicator, 0, global.playerOverworld.x + lengthdir_x(128, dirDiff), global.playerOverworld.y + lengthdir_y(128, dirDiff), 1, 1, dirDiff - 90, c_white, 1 - ((256 - (point_distance(global.playerOverworld.x, global.playerOverworld.y, x, y) - 64)) / 256));
+			}
+		}
+	}
+	
+	if (!global.inBattle){
+		with (global.playerOverworld){
+			if (ds_list_size(interactList) > 0){
+				with (interactList[| 0]){
+					draw_sprite_ext(spr_controls, 2, x, y, 1, 1, 0, c_white, 1);
+				}
+			}
+		}
+	}
 }
 
 if (view_current == 2){
@@ -67,13 +82,7 @@ if (view_current == 2){
 		
 			switch (object_get_name(object_index)){
 				case "obj_playerOverworld":
-					draw_sprite_ext(sprite_index, image_index, x + xOffset, room_height + y + yOffset, 1, 1, rotation, c_gray, 1);
-					with (obj_corruptibleParent){
-						if (corrupted){
-							var dirDiff = point_direction(other.x, other.y, x, y);
-							draw_sprite_ext(spr_directionIndicator, 0, other.x + lengthdir_x(128, dirDiff), room_height + other.y + lengthdir_y(128, dirDiff), 1, 1, dirDiff - 90, c_white, 1 - ((256 - point_distance(other.x, other.y, x, y)) / 256));
-						}
-					}
+					draw_sprite_ext(sprite_index, image_index, x + xOffset, room_height + y + yOffset, 1, 1, rotation, c_white, 1);
 					break;
 					
 				case "obj_house":
@@ -85,10 +94,31 @@ if (view_current == 2){
 					break;
 					
 				case "obj_enemyPortal":
-					draw_line(x, room_height + y, targetPosition[0], room_height + targetPosition[1]);
-					draw_rectangle(x - checkSize, room_height + y - checkSize, x + checkSize, room_height + y + checkSize, true);
-					draw_sprite_ext(sprite_index, 0, x, room_height + y, 1, 1, 0, c_white, 1);
+					//draw_line(x, room_height + y, targetPosition[0], room_height + targetPosition[1]);
+					draw_sprite_ext(sprite_index, image_index, x, room_height + y, 1, 1, 0, c_white, 1);
 					break;
+			}
+		}
+	}
+	
+	with (obj_corruptibleParent){
+		if (corrupted){
+			if (object_get_name(object_index) == "obj_house"){
+				var dirDiff = point_direction(global.playerOverworld.x, global.playerOverworld.y, x, y - 160);
+				draw_sprite_ext(spr_directionIndicator, 0, global.playerOverworld.x + lengthdir_x(128, dirDiff), room_height + global.playerOverworld.y + lengthdir_y(128, dirDiff), 1, 1, dirDiff - 90, c_white, 1 - ((256 - (point_distance(global.playerOverworld.x, global.playerOverworld.y, x, y - 160) - 64)) / 256));
+			}else{
+				var dirDiff = point_direction(global.playerOverworld.x, global.playerOverworld.y, x, y);
+				draw_sprite_ext(spr_directionIndicator, 0, global.playerOverworld.x + lengthdir_x(128, dirDiff), room_height + global.playerOverworld.y + lengthdir_y(128, dirDiff), 1, 1, dirDiff - 90, c_white, 1 - ((256 - (point_distance(global.playerOverworld.x, global.playerOverworld.y, x, y) - 64)) / 256));
+			}
+		}
+	}
+	
+	if (!global.inBattle){
+		with (global.playerOverworld){
+			if (ds_list_size(interactList) > 0){
+				with (interactList[| 0]){
+					draw_sprite_ext(spr_controls, 2, x, y + room_height, 1, 1, 0, c_white, 1);
+				}
 			}
 		}
 	}
@@ -129,15 +159,23 @@ if (view_current == 4){
 	randomScaleOffset = random_range(-0.25, 0.25);
 	draw_sprite_ext(spr_battleBG, 0, drawX, drawY, (2.5 + randomScaleOffset) * battleBGSpriteScale, (2.5 + randomScaleOffset) * battleBGSpriteScale, (10 + random_range(-2.5, 2.5)) * battleBGSpriteRotation, battlePortalC2, 1);
 	randomScaleOffset = random_range(-0.25, 0.25);
-	draw_sprite_ext(spr_battleBG, 0, drawX, drawY, (2 + randomScaleOffset) * battleBGSpriteScale, (2 + randomScaleOffset) * battleBGSpriteScale, (15 + random_range(-3, 3)) * battleBGSpriteRotation, battlePortalC0, 1);
+	draw_sprite_ext(spr_battleBG, 0, drawX, drawY, (2 + randomScaleOffset) * battleBGSpriteScale, (2 + randomScaleOffset) * battleBGSpriteScale, (15 + random_range(-3, 3)) * battleBGSpriteRotation, battlePortalC1, 1);
 	randomize();
 	// Reset draw color
 	draw_set_color(c_white);
 	
-	for (var i = 0; i < array_length(battlePositions[battlePosition]); i++){
+	with (obj_enemy){
+		if (initiative == global.selectedEnemy){
+			draw_sprite_ext(spr_indicator, 0, global.drawX + 480 + x, global.drawY + 260 + y - 70, 1, 1, 0, c_white, 1);
+		}
 		
-		draw_sprite(spr_player, 0, global.drawX + battlePositions[battlePosition][i][0], global.drawY + battlePositions[battlePosition][i][1]);
+		draw_healthbar(global.drawX + 480 + x - 25, global.drawY + 260 + y + 10, global.drawX + 480 + x + 25, global.drawY + 260 + y + 15, (hp / maxHP) * 100, c_black, make_color_rgb(165, 48, 48), make_color_rgb(165, 48, 48), 0, true, true);
+		
+		draw_sprite_ext(sprite_index, 0, global.drawX + 480 + x, global.drawY + 260 + y, image_xscale * scale, scale, 0, c_white, 1);
 	}
+	
+	draw_sprite_ext(spr_circleFade, 0, global.spellPosition[0], global.spellPosition[1], 1, 1, 0, c_white, global.spellAlpha);
+	
 	
 	// If surface does't exist, create it.
 	if (!surface_exists(battlePartSurface)){

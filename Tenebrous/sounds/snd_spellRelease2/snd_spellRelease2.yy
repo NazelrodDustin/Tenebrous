@@ -9,7 +9,7 @@
   "bitRate":128,
   "compression":0,
   "conversionMode":0,
-  "duration":34.639416,
+  "duration":4.653854,
   "name":"snd_spellRelease2",
   "parent":{
     "name":"Release",

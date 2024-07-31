@@ -57,8 +57,8 @@ if (view_current == 1){
 	
 	if (!global.inBattle){
 		with (global.playerOverworld){
-			if (ds_list_size(interactList) > 0){
-				with (interactList[| 0]){
+			if (interacted != noone){
+				with (interacted){
 					draw_sprite_ext(spr_controls, 2, x, y, 1, 1, 0, c_white, 1);
 				}
 			}
@@ -115,8 +115,8 @@ if (view_current == 2){
 	
 	if (!global.inBattle){
 		with (global.playerOverworld){
-			if (ds_list_size(interactList) > 0){
-				with (interactList[| 0]){
+			if (interacted != noone){
+				with (interacted){
 					draw_sprite_ext(spr_controls, 2, x, y + room_height, 1, 1, 0, c_white, 1);
 				}
 			}
@@ -174,7 +174,7 @@ if (view_current == 4){
 		draw_sprite_ext(sprite_index, 0, global.drawX + 480 + x, global.drawY + 260 + y, image_xscale * scale, scale, 0, c_white, 1);
 	}
 	
-	draw_sprite_ext(spr_circleFade, 0, global.spellPosition[0], global.spellPosition[1], 1, 1, 0, c_white, global.spellAlpha);
+	draw_sprite_ext(spr_circleFade, 0, global.drawX + global.spellPosition[0], global.drawY + global.spellPosition[1], 1, 1, 0, c_white, global.spellAlpha);
 	
 	
 	// If surface does't exist, create it.

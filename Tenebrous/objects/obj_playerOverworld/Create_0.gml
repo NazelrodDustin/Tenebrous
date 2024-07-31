@@ -3,7 +3,6 @@ moveSpeed = 6;
 collisionList = [obj_playerBlock, obj_house, obj_well];
 image_speed = 0;
 
-interactList = ds_list_create();
 interacted = noone;
 
 xOffset = 0;

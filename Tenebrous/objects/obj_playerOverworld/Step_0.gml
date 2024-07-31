@@ -79,6 +79,7 @@ if (global.inBattle && alive){
 				if (global.spell > 2){
 					global.spell = 0;	
 				}
+				
 				global.spell = 0;
 
 			
@@ -163,18 +164,43 @@ if (global.inBattle && alive){
 	
 }else{
 	
-	ds_list_clear(interactList);
-	collision_rectangle_list(x - 128, y - 128, x + 128, y + 128, obj_corruptibleParent, false, false, interactList, true);	
+	interacted = noone;
 	
-	
-	
-	
-	if (ds_list_size(interactList) > 0){
-		if keyboard_check_released(ord("E")){
-			global.gameManager.showBattle(interactList[| 0].encounterSize);
-			interacted = interactList[| 0];
+	with (obj_corruptibleParent){
+		
+		if (object_get_name(object_index) == "obj_well"){
+		
+			if (instance_number(obj_corruptibleParent) > 1){
+				show_debug_message("Skipping");
+				continue;	
+			}
+		}
+		
+		if (corrupted){
+			if (other.interacted == noone){
+				other.interacted = id;
+				show_debug_message(other.interacted);
+			}else{
+				if (point_distance(other.x, other.y, x, y) < point_distance(other.x, other.y, other.interacted.x, other.interacted.y)){
+					other.interacted = id;	
+					show_debug_message(other.interacted);
+				}
+			}
 		}
 	}
+	show_debug_message(interacted);
+	
+	if (interacted != noone){
+		if (point_distance(x, y, interacted.x, interacted.y) > 256){
+			interacted = noone;	
+		}else{
+			if keyboard_check_released(ord("E")){
+				global.gameManager.showBattle(interacted.encounterSize);
+			}	
+		}
+	}
+	
+	show_debug_message(interacted);
 }
 
 if (abs(yOffset) > 2 && footStepPlayed){

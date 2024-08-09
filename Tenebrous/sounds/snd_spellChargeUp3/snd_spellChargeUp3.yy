@@ -9,7 +9,7 @@
   "bitRate":128,
   "compression":0,
   "conversionMode":0,
-  "duration":31.9375,
+  "duration":4.721146,
   "name":"snd_spellChargeUp3",
   "parent":{
     "name":"Cast",

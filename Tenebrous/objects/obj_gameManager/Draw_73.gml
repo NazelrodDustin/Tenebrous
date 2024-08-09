@@ -42,6 +42,7 @@ if (view_current == 7){
 			draw_sprite_ext(spr_battleUI, global.UIFrame, global.drawX, global.drawY + battleUIPosition, 1, 1, 0, c_white, battleUIAlpha);
 			
 			draw_surface_part(battleSurface, 0, 0, 960, overworldSurfacePosition, global.drawX, global.drawY);
+			draw_sprite_ext(spr_circleFade, 0, global.drawX + (960 / 2) + global.spellPosition[0], global.drawY + (540 / 2) + global.spellPosition[1], 1, 1, 0, global.spellColor, global.spellAlpha); //
 		}
 
 	}

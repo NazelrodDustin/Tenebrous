@@ -5,7 +5,6 @@
 isVisible = true;
 corrupted = true;
 encounterSize = irandom_range(1, 2);
-encounterSize = 1;
 
 corruptionSize = 3;
 corruptionPartSystem = part_system_create(ps_corruption);

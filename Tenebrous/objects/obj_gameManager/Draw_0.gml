@@ -169,18 +169,19 @@ if (view_current == 4){
 			draw_sprite_ext(spr_indicator, 0, global.drawX + 480 + x, global.drawY + 260 + y - 70, 1, 1, 0, c_white, 1);
 		}
 		
-		draw_healthbar(global.drawX + 480 + x - 25, global.drawY + 260 + y + 10, global.drawX + 480 + x + 25, global.drawY + 260 + y + 15, (hp / maxHP) * 100, c_black, make_color_rgb(165, 48, 48), make_color_rgb(165, 48, 48), 0, true, true);
+		if (scale == 1){
+			draw_healthbar(global.drawX + 480 + x - 25, global.drawY + 260 + y + 10, global.drawX + 480 + x + 25, global.drawY + 260 + y + 15, (hp / maxHP) * 100, c_black, make_color_rgb(165, 48, 48), make_color_rgb(165, 48, 48), 0, true, true);
+		}
 		
-		draw_sprite_ext(sprite_index, 0, global.drawX + 480 + x, global.drawY + 260 + y, image_xscale * scale, scale, 0, c_white, 1);
+		draw_sprite_ext(sprite_index, image_index, global.drawX + 480 + x, global.drawY + 260 + y, image_xscale * scale, scale, 0, c_white, 1);
 	}
-	
-	draw_sprite_ext(spr_circleFade, 0, global.drawX + global.spellPosition[0], global.drawY + global.spellPosition[1], 1, 1, 0, c_white, global.spellAlpha);
 	
 	
 	// If surface does't exist, create it.
 	if (!surface_exists(battlePartSurface)){
 		battlePartSurface = surface_create(1024, 256);
 	}
+	
 	
 	// Draw particle system to surface
 	surface_set_target(battlePartSurface);

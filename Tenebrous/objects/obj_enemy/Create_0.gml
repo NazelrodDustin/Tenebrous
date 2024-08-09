@@ -10,6 +10,8 @@ hitLvl = 1 * global.difficulty;
 roundsConfused = 0;
 attackTargets = [];
 
+
+
 confused = false;
 position = [];
 inTime = 0;
@@ -22,11 +24,13 @@ releaseSoundPlayed = false;
 resultSoundPlayed = false;
 initiative = 0;
 target = noone;
-spellAlpha = 0;
 x = 0;
 y = 0;
 
 image_xscale = (random_range(-1, 1) < 0 ? -1 : 1);
+
+attackOffset = [image_xscale * -10, -32];
+
 
 soundEnter = new soundEffect("snd_enemySpawn", min(global.sfxLevel * 5, 1), .1, .01);
 
@@ -34,35 +38,55 @@ attackTimeSource = time_source_create(time_source_global, 1, time_source_units_f
 	
 	if (!attackSoundPlayed){
 		global.charge.play(0, 0, true);
+		//show_debug_message("Attack Charge Played");
+		global.spellColor = c_red;
 		attackSoundPlayed = true;
 	}
 	
-	if (current_time - time_started < 1000){
-		spellAlpha = min(1, ((current_time - time_started) / 750));
+	if (current_time - time_started < 2500){
+		global.spellAlpha = min(1, ((current_time - time_started) / 750));
 	}
 	
-	if (current_time - time_started > 1000 && !releaseSoundPlayed){
+	if (current_time - time_started > 2500 && !releaseSoundPlayed){
 		global.release.play(0, 0, true);
-		attackSoundPlayed = true;
+		//show_debug_message("Attack Release Played");
+		releaseSoundPlayed = true;
 	}
 	
-	global.spellAlpha = min(1, ((current_time - time_started) / 750));
+	var percent = min(500, max(0, (current_time - time_started) - 2500)) / 500;
+	var dist = 0;
+	var angle = 0;
 	
-	var percent = max(min(0, (current_time - time_started) - 1000), 500) / 500;
+	if (instance_exists(target)){
+		dist = point_distance(x + attackOffset[0], y + attackOffset[1], target.x, target.y);
+		angle = point_direction(x + attackOffset[0], y + attackOffset[1], target.x, target.y);
+	}
 	
-	var dist = point_distance(x, y, target.x, target.y);
+	//show_debug_message(target);
 	
-	var angle = point_direction(x, y, target.x, target.y);
-	
-	global.spellPosition = [lengthdir_x(dist * percent, angle), lengthdir_y(dist * percent, angle)];
-	
-	if (current_time - time_started > 1500){
-		if (!resultSoundPlayed){
+	global.spellPosition = [x + attackOffset[0] + lengthdir_x(dist * percent, angle), y + attackOffset[1] + lengthdir_y(dist * percent, angle)];
+	//show_debug_message(string("My Position: {0}, Target Position: {1}, Spell Position: {2}, Percent: {3}, Distance {4}, Angle {5}", [x, y], [target.x, target.y], global.spellPosition, percent, dist, angle));
+	if (current_time - time_started > 3000){
+		if (!resultSoundPlayed){			
+			resultSoundPlayed = true;	
+		}
+		
+		global.spellAlpha = min(1, 1 - (((current_time - time_started) - 3000) / 250));
+		
+		if (global.spellAlpha <= 0){
+			
+			
+			if (target == global.playerBattle){
+				target = global.playerOverworld;	
+			}
+			
 			if (random(target.blockLvl) < random(hitLvl)){
 				target.doDamage(random_range(spellDamageBase, spellDamageBase + spellDamageRange));		
 				global.damage.play(0, 0, true);
+				//show_debug_message("Attack Damage Played");
 			}else{
 				global.block.play(0, 0, true);	
+				//show_debug_message("Attack Blocked Played");
 				
 				global.initiative += 1;
 			
@@ -71,12 +95,11 @@ attackTimeSource = time_source_create(time_source_global, 1, time_source_units_f
 				}
 			}
 			
-			resultSoundPlayed = true;	
-		}
-		
-		spellAlpha = min(1, 1 - (((current_time - time_started) - 1500) / 250));
-		
-		if (spellAlpha <= 0){
+			if (target == global.playerOverworld){
+				target = global.playerBattle;	
+			}
+			
+			global.spellAlpha = 0;
 			hasAttacked = false;
 			attackSoundPlayed = false;
 			releaseSoundPlayed = false;
@@ -108,7 +131,7 @@ function doConfused(){
 function doDamage(_amount){
 
 	hp -= _amount;
-	show_debug_message(hp);
+	//show_debug_message(hp);
 	global.initiative += 1;
 			
 	if (global.initiative > instance_number(obj_enemy)){

@@ -1,6 +1,7 @@
 /// @description Insert description here
 // You can write your code in this editor
 
+
 worldTiles = array_create(0);
 
 surfaceGrassNormal = noone;
@@ -10,7 +11,7 @@ surfaceCorruptMix = noone;
 sprite_index = noone;
 
 random_set_seed(global.seed);
-seed = global.roomsCleared * irandom_range(-8192, 8192);
+seed = (global.roomsCleared + 1) * irandom_range(-8192, 8192);
 
 
 for (var i = 0; i < room_width / 64; i++){

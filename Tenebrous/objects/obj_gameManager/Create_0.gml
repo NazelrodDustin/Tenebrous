@@ -25,6 +25,7 @@ global.inBattle = false;
 global.roomsCleared = 0;
 
 global.playerOverworld = instance_create_depth(480, 270, 0, obj_playerOverworld);
+global.playerBattle = instance_create_depth(0, 254, 0, obj_playerBattle);
 global.cameraPercentCorrupt = 0;
 
 global.drawX = -960;
@@ -35,6 +36,7 @@ global.spellSelected = false;
 global.spell = 0;
 global.spellPosition = [0, 0];
 global.spellAlpha = 0;
+global.spellColor = c_white;
 
 // Colors
 global.grassRegularBaseColor = make_color_rgb(70, 130, 50);

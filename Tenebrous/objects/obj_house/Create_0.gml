@@ -4,7 +4,7 @@
 event_inherited();
 corruptionSize = 17.5;
 encounterSize = irandom_range(3,4);
-encounterSize = 1;
+
 xOffset = 0;
 yOffset = -160;
 

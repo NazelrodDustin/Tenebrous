@@ -19,25 +19,21 @@ y = scale * position[1];
 
 
 if (confused){
-	image_speed = 0.25;	
+	image_speed = .25;
 }else{
 	image_speed = 0;
 	image_index = 0;
 }
 
-
-//show_debug_message(string("Scale: {0}, Initiative: {1}, Global: {2}, Has Attacked?: {3}", scale, initiative, global.initiative, hasAttacked ? "True" : "False"));
-
 if (scale >= 1 && initiative == global.initiative && !hasAttacked){
-	attackTargets = [global.playerOverworld];
 	
+	attackTargets = [global.playerBattle];
+	//show_debug_message("Enemy {0} confused", confused ? "is" : "is not");
 	if (confused){
 		with (obj_enemy){
 			array_push(other.attackTargets, id);
 		}
 		roundsConfused++;
-	}else{
-		roundsConfused = 0;	
 	}
 	
 	doAttack();
@@ -45,6 +41,11 @@ if (scale >= 1 && initiative == global.initiative && !hasAttacked){
 	target = array_shuffle(attackTargets)[0];
 	
 	if (confused){
-		confused = (random(1) < .125 * roundsConfused);	
+		var confusedChance = random(1);
+		confused = !(confusedChance < .125 * roundsConfused);
+		//show_debug_message("Enemy {0} confused after turn. Confused chance: {1} vs Confusion depth {2}", confused ? "is" : "is not", confusedChance, .125 * roundsConfused);
+		if (!confused){
+			roundsConfused = 0;	
+		}
 	}
 }

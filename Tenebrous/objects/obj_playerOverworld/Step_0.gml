@@ -80,8 +80,7 @@ if (global.inBattle && alive){
 					global.spell = 0;	
 				}
 				
-				global.spell = 0;
-
+				//global.spell = 0;
 			
 				if (global.spell == 2){
 					hpInterp = max(hp + manaCurrent, maxHp);
@@ -119,14 +118,15 @@ if (global.inBattle && alive){
 						manaAfter = manaCurrent - 2.5;	
 					}
 				
-					global.selectedEnemy += keyboard_check_released(ord("A")) - keyboard_check_released(ord("S"));
+					global.selectedEnemy += keyboard_check_released(ord("A")) - keyboard_check_released(ord("D"));
 				
 					if (global.selectedEnemy < 1){
-						global.selectedEnemy = 1;	
+						global.selectedEnemy = instance_number(obj_enemy);
+							
 					}
 				
 					if (global.selectedEnemy > instance_number(obj_enemy)){
-						global.selectedEnemy = instance_number(obj_enemy);
+						global.selectedEnemy = 1;
 					}
 				
 					if (keyboard_check_released(ord("E"))){
@@ -154,7 +154,7 @@ if (global.inBattle && alive){
 		}
 	}else{
 		manaRegen = false;
-		global.selectedEnemy = 0;	
+		global.selectedEnemy = 1;	
 	}
 	
 	if (instance_number(obj_enemy) == 0 && global.gameManager.battleBGSpriteScale >= 1){
@@ -171,7 +171,6 @@ if (global.inBattle && alive){
 		if (object_get_name(object_index) == "obj_well"){
 		
 			if (instance_number(obj_corruptibleParent) > 1){
-				show_debug_message("Skipping");
 				continue;	
 			}
 		}
@@ -179,16 +178,13 @@ if (global.inBattle && alive){
 		if (corrupted){
 			if (other.interacted == noone){
 				other.interacted = id;
-				show_debug_message(other.interacted);
 			}else{
 				if (point_distance(other.x, other.y, x, y) < point_distance(other.x, other.y, other.interacted.x, other.interacted.y)){
 					other.interacted = id;	
-					show_debug_message(other.interacted);
 				}
 			}
 		}
 	}
-	show_debug_message(interacted);
 	
 	if (interacted != noone){
 		if (point_distance(x, y, interacted.x, interacted.y) > 256){
@@ -199,8 +195,6 @@ if (global.inBattle && alive){
 			}	
 		}
 	}
-	
-	show_debug_message(interacted);
 }
 
 if (abs(yOffset) > 2 && footStepPlayed){

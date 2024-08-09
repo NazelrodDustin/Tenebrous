@@ -31,7 +31,7 @@ function soundEffect(_baseName, _gain, _pitchRandom, _volRandom, _falloffRef = 2
 	
 		if (_soundIndex != -1){
 			if (!audio_exists(_soundIndex)){
-				show_debug_message("Failed to add sound effect variation, soundIndex doesn't exist.");
+				//show_debug_message("Failed to add sound effect variation, soundIndex doesn't exist.");
 				break;
 			}else{
 				array_push(__samples, _soundIndex);		

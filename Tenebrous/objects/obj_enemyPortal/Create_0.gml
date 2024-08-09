@@ -10,7 +10,7 @@ noMovementCount = 0;
 moveSpeed = 3;
 image_speed = 0.5;
 image_index = irandom(7);
-encounterSize = 1;
+
 function setTarget(){
 	waitTime = random_range(5000, 7500);
 	targetPosition = [irandom_range(128, room_width - 128), irandom_range(128, room_height - 128)];

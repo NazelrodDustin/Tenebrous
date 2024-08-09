@@ -1,7 +1,7 @@
 /// @description Insert description here
 // You can write your code in this editor
 
-show_debug_message("Deleting Overworld Room Manager");
+//show_debug_message("Deleting Overworld Room Manager");
 
 
 if (sprite_exists(sprite_index)){

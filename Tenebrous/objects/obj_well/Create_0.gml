@@ -4,4 +4,4 @@
 event_inherited();
 
 corruptionSize = 25;
-encounterSize = 1;
+encounterSize = irandom_range(4,5);

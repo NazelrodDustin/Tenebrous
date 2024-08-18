@@ -1,8 +1,10 @@
 ~E:/Github/Tenebrous/Tenebrous/objects/obj_corruptibleParent/Create_0.gml
 ~E:/Github/Tenebrous/Tenebrous/objects/obj_corruptibleParent/Step_1.gml
+~E:/Github/Tenebrous/Tenebrous/objects/obj_corruptibleParent/KeyRelease_107.gml
 ~E:/Github/Tenebrous/Tenebrous/objects/obj_enemy/Create_0.gml
 ~E:/Github/Tenebrous/Tenebrous/objects/obj_enemy/Step_0.gml
 ~E:/Github/Tenebrous/Tenebrous/objects/obj_enemy/CleanUp_0.gml
+~E:/Github/Tenebrous/Tenebrous/objects/obj_enemy/KeyRelease_96.gml
 ~E:/Github/Tenebrous/Tenebrous/objects/obj_enemyPortal/Create_0.gml
 ~E:/Github/Tenebrous/Tenebrous/objects/obj_enemyPortal/Step_1.gml
 ~E:/Github/Tenebrous/Tenebrous/objects/obj_gameManager/Create_0.gml
@@ -13,14 +15,14 @@
 ~E:/Github/Tenebrous/Tenebrous/objects/obj_gameManager/Draw_0.gml
 ~E:/Github/Tenebrous/Tenebrous/objects/obj_gameManager/Draw_72.gml
 ~E:/Github/Tenebrous/Tenebrous/objects/obj_house/Create_0.gml
+~E:/Github/Tenebrous/Tenebrous/objects/obj_house/Step_0.gml
 ~E:/Github/Tenebrous/Tenebrous/objects/obj_overworldRoomManager/Create_0.gml
 ~E:/Github/Tenebrous/Tenebrous/objects/obj_overworldRoomManager/Draw_72.gml
 ~E:/Github/Tenebrous/Tenebrous/objects/obj_overworldRoomManager/CleanUp_0.gml
 ~E:/Github/Tenebrous/Tenebrous/objects/obj_playerBattle/Create_0.gml
 ~E:/Github/Tenebrous/Tenebrous/objects/obj_playerOverworld/Step_0.gml
 ~E:/Github/Tenebrous/Tenebrous/objects/obj_playerOverworld/Create_0.gml
-~E:/Github/Tenebrous/Tenebrous/objects/obj_playerOverworld/Draw_0.gml
-~E:/Github/Tenebrous/Tenebrous/objects/obj_playerOverworld/Draw_73.gml
+~E:/Github/Tenebrous/Tenebrous/objects/obj_playerOverworld/Draw_64.gml
 ~E:/Github/Tenebrous/Tenebrous/objects/obj_playerOverworld/KeyRelease_105.gml
 ~E:/Github/Tenebrous/Tenebrous/objects/obj_startMenu/Create_0.gml
 ~E:/Github/Tenebrous/Tenebrous/objects/obj_startMenu/KeyRelease_13.gml
@@ -30,5 +32,7 @@
 ~E:/Github/Tenebrous/Tenebrous/objects/obj_well/Create_0.gml
 ~E:/Github/Tenebrous/Tenebrous/rooms/rm_startMenu/RoomCreationCode.gml
 E:/Github/Tenebrous/Tenebrous/scripts/scr_averageArray/scr_averageArray.gml
+E:/Github/Tenebrous/Tenebrous/scripts/scr_getCorruptedCount/scr_getCorruptedCount.gml
 E:/Github/Tenebrous/Tenebrous/scripts/scr_makeCorruptParticle/scr_makeCorruptParticle.gml
+E:/Github/Tenebrous/Tenebrous/scripts/scr_passInitiative/scr_passInitiative.gml
 E:/Github/Tenebrous/Tenebrous/scripts/scr_soundEffects/scr_soundEffects.gml

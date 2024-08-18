@@ -26,9 +26,9 @@ if (confused){
 }
 
 if (scale >= 1 && initiative == global.initiative && !hasAttacked){
-	
+	//attackTargets = [id];
 	attackTargets = [global.playerBattle];
-	//show_debug_message("Enemy {0} confused", confused ? "is" : "is not");
+	show_debug_message("Enemy {0} confused", confused ? "is" : "is not");
 	if (confused){
 		with (obj_enemy){
 			array_push(other.attackTargets, id);
@@ -39,6 +39,15 @@ if (scale >= 1 && initiative == global.initiative && !hasAttacked){
 	doAttack();
 	hasAttacked = true;
 	target = array_shuffle(attackTargets)[0];
+}
+
+if (hasAttacked && initiative != global.initiative){
+	hasAttacked = false;
+	attackSoundPlayed = false;
+	releaseSoundPlayed = false;
+	resultSoundPlayed = false;
+	target = noone;
+	time_started = -1;
 	
 	if (confused){
 		var confusedChance = random(1);

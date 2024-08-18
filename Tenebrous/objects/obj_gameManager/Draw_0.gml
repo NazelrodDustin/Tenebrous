@@ -24,7 +24,7 @@ if (view_current == 1){
 		with (drawArray[i][0]){
 			switch (object_get_name(object_index)){
 				case "obj_playerOverworld":
-					draw_sprite_ext(sprite_index, image_index, x + xOffset, y + yOffset, 1, 1, rotation, c_white, 1);
+					draw_sprite_ext(sprite_index, image_index, x + xOffset, y + yOffset + transitionOffset, 1, 1, rotation, c_white, 1);
 					break;
 					
 				case "obj_house":
@@ -82,11 +82,13 @@ if (view_current == 2){
 		
 			switch (object_get_name(object_index)){
 				case "obj_playerOverworld":
-					draw_sprite_ext(sprite_index, image_index, x + xOffset, room_height + y + yOffset, 1, 1, rotation, c_white, 1);
+					draw_sprite_ext(sprite_index, image_index, x + xOffset, room_height + y + yOffset + transitionOffset, 1, 1, rotation, c_white, 1);
 					break;
 					
 				case "obj_house":
 					draw_sprite_ext(sprite_index, corrupted, x, room_height + y, 1, 1, 0, c_white, 1);
+					//draw_rectangle(x - 120, room_height + y - (8 + 88), x + 120, room_height + y - (312 - 64), true);
+					//draw_rectangle(x - 80, room_height + y - (8 + 88), x + 80, room_height + y - (25), true);
 					break;
 					
 				case "obj_well":
@@ -165,13 +167,16 @@ if (view_current == 4){
 	draw_set_color(c_white);
 	
 	with (obj_enemy){
-		if (initiative == global.selectedEnemy){
+		if (initiative == global.selectedEnemy && global.UIFrame == 4){
 			draw_sprite_ext(spr_indicator, 0, global.drawX + 480 + x, global.drawY + 260 + y - 70, 1, 1, 0, c_white, 1);
 		}
 		
 		if (scale == 1){
 			draw_healthbar(global.drawX + 480 + x - 25, global.drawY + 260 + y + 10, global.drawX + 480 + x + 25, global.drawY + 260 + y + 15, (hp / maxHP) * 100, c_black, make_color_rgb(165, 48, 48), make_color_rgb(165, 48, 48), 0, true, true);
+			//var init = string("My initiative:{0},\nCurrent initiative:{1}\nConfused? {2}\nHealth:{3}", initiative, global.initiative, confused ? "Yes" : "No", hp);
+			//wdraw_text(global.drawX + 480 + x - string_width(init) / 2, global.drawY + 260 + y - 150, init);
 		}
+		
 		
 		draw_sprite_ext(sprite_index, image_index, global.drawX + 480 + x, global.drawY + 260 + y, image_xscale * scale, scale, 0, c_white, 1);
 	}

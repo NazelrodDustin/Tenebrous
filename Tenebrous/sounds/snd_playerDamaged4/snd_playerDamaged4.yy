@@ -9,7 +9,7 @@
   "bitRate":128,
   "compression":0,
   "conversionMode":0,
-  "duration":30.389418,
+  "duration":0.725958,
   "name":"snd_playerDamaged4",
   "parent":{
     "name":"Damage",

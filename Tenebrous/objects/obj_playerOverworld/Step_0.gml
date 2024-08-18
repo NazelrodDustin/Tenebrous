@@ -59,107 +59,128 @@ if (moving || (movementProgress % 1) > 0){
 
 if (global.inBattle && alive){
 	image_index = 2;
+	if (instance_number(obj_enemy) > 0 && global.enemiesSpawed){
+		if (global.initiative != 0){
+			regen = false;	
+		}
 	
-	if (!manaRegen){
-		manaCurrent += 5;
-		manaCurrent = min(manaCurrent, manaMax);
-		manaAfter = manaCurrent;
-		manaRegen = true;
-	}
+		if (!regen && global.initiative == 0){
+			
+			hp += hpRegen;
+			hp = min (hp, maxHp);
+			hpInterp = hp;
+			
+			global.healthAmt = hp / maxHp;
+			global.healthInterp = hpInterp / maxHp;
+			
+			manaCurrent += manaRegen;
+			manaCurrent = min(manaCurrent, manaMax);
+			manaAfter = manaCurrent;
+			regen = true;
+		}
 	
-	if (!hasAttacked){
-		if (global.initiative == 0){
-			if (!global.spellSelected){
-				global.spell += keyboard_check_released(ord("S")) - keyboard_check_released(ord("W"));
+		if (!hasAttacked){
+			if (global.initiative == 0){
+				if (!global.spellSelected){
+					global.spell += keyboard_check_released(ord("S")) - keyboard_check_released(ord("W"));
 		
-				if (global.spell < 0){
-					global.spell = 2;	
-				}
+					if (global.spell < 0){
+						global.spell = 2;	
+					}
 		
-				if (global.spell > 2){
-					global.spell = 0;	
-				}
-				
-				//global.spell = 0;
+					if (global.spell > 2){
+						global.spell = 0;	
+					}
 			
-				if (global.spell == 2){
-					hpInterp = max(hp + manaCurrent, maxHp);
-					manaAfter = manaCurrent - (hpInterp - hp);
-				}else{
-					hpInterp = hp;
-				
-					if (global.spell == 1){
-						manaAfter = manaCurrent - 5;	
+					if (global.spell == 2){
+						hpInterp = min(hp + (((manaCurrent * 10) * 6) / 2), maxHp);
+						manaAfter = manaCurrent - ceil((((hpInterp - hp) / 10) / 6) * 2);
 					}else{
-						manaAfter = manaCurrent - 2.5;	
-					}
-				}
-			
-				if (manaAfter >= 0 && keyboard_check_released(ord("E"))){
-					global.spellSelected = true;
-				}
-			
-			}else{
-				if (global.spell == 2){
-					hpInterp = min(hp + manaCurrent, maxHp);
-					manaAfter = manaCurrent - (hpInterp - hp);
+						hpInterp = hp;
 				
-					if (hpInterp - hp == 0){
-						global.spellSelected = false;
-					}else{
-						doHeal(hpInterp - hp);
-						manaCurrent = manaAfter;
-					}
-				}else{
-				
-					if (global.spell == 1){
-						manaAfter = manaCurrent - 5;	
-					}else{
-						manaAfter = manaCurrent - 2.5;	
-					}
-				
-					global.selectedEnemy += keyboard_check_released(ord("A")) - keyboard_check_released(ord("D"));
-				
-					if (global.selectedEnemy < 1){
-						global.selectedEnemy = instance_number(obj_enemy);
-							
-					}
-				
-					if (global.selectedEnemy > instance_number(obj_enemy)){
-						global.selectedEnemy = 1;
-					}
-				
-					if (keyboard_check_released(ord("E"))){
-						with (obj_enemy){
-							if (initiative == global.selectedEnemy){
-								other.target = id;	
-							}
+						if (global.spell == 1){
+							manaAfter = manaCurrent - 10;	
+						}else{
+							manaAfter = manaCurrent - 5;	
 						}
-					
-						manaCurrent = manaAfter;
-					
-						doAttack();
-						hasAttacked = true;
 					}
 				
-					if (keyboard_check_released(ord("Q"))){
-						global.spellSelected = false;
-					}
-				}
+					global.healthInterp = hpInterp / maxHp;
 			
+					if (manaAfter >= 0 && keyboard_check_released(ord("E"))){
+						global.spellSelected = true;
+					}
+			
+				}else{
+					if (global.spell == 2){
+						hpInterp = min(hp + (((manaCurrent * 10) * 6) / 2), maxHp);
+						manaAfter = manaCurrent - ceil((((hpInterp - hp) / 10) / 6) * 2);
+				
+						if (hpInterp - hp == 0){
+							global.spellSelected = false;
+						}else{
+							target = id;
+							doAttack();
+							hasAttacked = true;
+							global.spellCasted = true;
+							
+						}
+					}else{
+				
+						if (global.spell == 1){
+							manaAfter = manaCurrent - 10;	
+						}else{
+							manaAfter = manaCurrent - 5;	
+						}
+				
+						global.selectedEnemy += keyboard_check_released(ord("A")) - keyboard_check_released(ord("D"));
+				
+						if (global.selectedEnemy < 1){
+							global.selectedEnemy = instance_number(obj_enemy);
+							
+						}
+				
+						if (global.selectedEnemy > instance_number(obj_enemy)){
+							global.selectedEnemy = 1;
+						}
+				
+						if (keyboard_check_released(ord("E"))){
+							with (obj_enemy){
+								if (initiative == global.selectedEnemy){
+									other.target = id;	
+								}
+							}
+					
+							manaCurrent = manaAfter;
+					
+							doAttack();
+							hasAttacked = true;
+							global.spellCasted = true;
+						}
+				
+						if (keyboard_check_released(ord("Q"))){
+							global.spellSelected = false;
+						}
+					}
+			
+				}
+			}else{
+				global.spellCasted = false;
+				global.spellSelected = 0;
+				global.spell = 0;
 			}
-		}else{
-			global.spellSelected = 0;
-			global.spell = 0;
 		}
 	}else{
-		manaRegen = false;
-		global.selectedEnemy = 1;	
-	}
-	
-	if (instance_number(obj_enemy) == 0 && global.gameManager.battleBGSpriteScale >= 1){
-		interacted.corrupted = false;
-		global.gameManager.removeBattle();
+		if (global.gameManager.battleUpgradeOffset <= 0 && global.enemiesSpawed){
+			if (instance_exists(interacted)){
+				if (interacted.corrupted){
+					interacted.clearCorruption();
+					global.gameManager.showUpgrades();
+				}
+			}else{
+				show_debug_message("The current targeted interactable has been destroyed");	
+			}
+		}	
 	}
 	
 }else{
@@ -170,7 +191,7 @@ if (global.inBattle && alive){
 		
 		if (object_get_name(object_index) == "obj_well"){
 		
-			if (instance_number(obj_corruptibleParent) > 1){
+			if (getCorruptedCount() > 1){
 				continue;	
 			}
 		}
@@ -183,6 +204,10 @@ if (global.inBattle && alive){
 					other.interacted = id;	
 				}
 			}
+		}else{
+			if (object_get_name(object_index) == "obj_well"){
+				other.interacted = id;
+			}
 		}
 	}
 	
@@ -190,10 +215,20 @@ if (global.inBattle && alive){
 		if (point_distance(x, y, interacted.x, interacted.y) > 256){
 			interacted = noone;	
 		}else{
-			if keyboard_check_released(ord("E")){
-				global.gameManager.showBattle(interacted.encounterSize);
-			}	
-		}
+			if keyboard_check_released(ord("E")){	
+				if (interacted.corrupted){
+					global.gameManager.showBattle(interacted.encounterSize);
+				}else{
+					global.gameManager.transition(function(){
+						room_goto(rm_overworld);
+						time_source_start(time_source_create(time_source_global, 1, time_source_units_frames, function(){
+							global.roomsCleared++;
+							instance_create_layer(0, 0, "Instances", obj_overworldRoomManager);
+						}));
+					});	
+				}
+			}
+		}			
 	}
 }
 
@@ -207,3 +242,6 @@ if (abs(yOffset) < 0.25 && !footStepPlayed){
 }
 
 audio_listener_position(x, y, 0);
+
+global.manaCurrent = manaCurrent / manaMax;
+global.manaAfter = manaAfter / manaMax;

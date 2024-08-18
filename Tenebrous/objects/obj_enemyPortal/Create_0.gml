@@ -19,3 +19,4 @@ function setTarget(){
 }
 
 setTarget();
+difficulty = encounterSize * 0.025;

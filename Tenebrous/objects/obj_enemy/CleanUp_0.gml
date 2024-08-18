@@ -8,10 +8,14 @@ with (obj_enemy){
 	}
 }
 
-if (global.initiative > instance_number(obj_enemy)){
+if (initiative == global.initiative - 1){
+	global.initiative--;	
+}
+
+if (global.initiative > instance_number(obj_enemy) - 1){
 	global.initiative = 0;	
 }
 
-if (initiative == global.initiative - 1){
-	global.initiative--;	
+if (initiative == global.selectedEnemy){
+	global.selectedEnemy = 1;	
 }

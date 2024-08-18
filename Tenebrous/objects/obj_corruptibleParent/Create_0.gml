@@ -5,7 +5,7 @@
 isVisible = true;
 corrupted = true;
 encounterSize = irandom_range(1, 2);
-
+difficulty = 0;
 corruptionSize = 3;
 corruptionPartSystem = part_system_create(ps_corruption);
 
@@ -22,4 +22,9 @@ time_source_start(time_source_create(time_source_global, 1, time_source_units_fr
 	part_system_automatic_update(corruptionPartSystem, false);
 }));
 
+
+function clearCorruption(){
+	corrupted = false;
+	global.difficulty += difficulty;
+}
 

@@ -14,10 +14,10 @@ global.deltaTime = delta_time / 1000000;
 
 global.seed = random_get_seed();
 
-global.musicLevel = 0.25; // 0-1 to be multiplied with any music tracks being played.
-global.sfxLevel = 0.25; // 0-1 to be multiplied with any sfx being played.
+global.musicLevel = 0.0; // 0-1 to be multiplied with any music tracks being played.
+global.sfxLevel = 0.5; // 0-1 to be multiplied with any sfx being played.
 global.initiative = 1;
-global.difficulty = .75;
+global.difficulty = .5;
 
 global.pauseOverworld = true;
 global.inBattle = false;
@@ -37,6 +37,8 @@ global.spell = 0;
 global.spellPosition = [0, 0];
 global.spellAlpha = 0;
 global.spellColor = c_white;
+global.spellCasted = false;
+global.enemiesSpawed = false;
 
 // Colors
 global.grassRegularBaseColor = make_color_rgb(70, 130, 50);
@@ -52,6 +54,7 @@ corruptionValuesIndex = 0;
 global.inBattle = false;
 global.UIFrame = 0;
 
+
 voidPartSystem = part_system_create(ps_void);
 part_system_position(voidPartSystem, -980 / 2, 540 * 7 + (540 / 2));
 part_system_automatic_draw(voidPartSystem, false);
@@ -63,6 +66,39 @@ battleCountUp = 0;
 battleUIPosition = 284;
 battleUIAlpha = 0;
 battleOffset = 0;
+battleUpgradeOffset = 0;
+battleUpgradeSelected = 0;
+battleUpgradeConfirmed = false;
+
+
+battleUpgradeTimeSource = time_source_create(time_source_global, 1, time_source_units_frames, function(){
+	var percent;
+	if (battleCountUp < battleAppearTime){
+		battleCountUp += global.deltaTime;
+		percent = battleCountUp / battleAppearTime;
+	}else{
+		percent = 1;
+		audio_stop_sound(snd_musicBattle);
+		time_source_stop(battleUpgradeTimeSource);
+		removeBattle();
+	}
+	
+	battleMusicVolume = 1 - percent;
+	overworldMusicVolume = percent;
+	
+	battleUpgradeOffset = animcurve_channel_evaluate(animcurve_get_channel(anc_viewBattleDistort, "In"), percent);
+	
+}, [], -1);
+
+function showUpgrades(){
+	battleCountUp = 0;
+	time_source_start(battleUpgradeTimeSource);
+	audio_play_sound(snd_musicOverworldBase, 1, true);
+	audio_play_sound(snd_musicOverworldClean, 2, true);
+	audio_sound_loop_end(snd_musicOverworldClean, audio_sound_length(snd_musicOverworldBase));
+	audio_play_sound(snd_musicOverworldCorrupted, 2, true);
+	audio_sound_loop_end(snd_musicOverworldCorrupted, audio_sound_length(snd_musicOverworldBase));
+}
 
 battleInTimeSource = time_source_create(time_source_global, 1, time_source_units_frames, function(){
 	global.pauseOverworld = true;
@@ -100,12 +136,12 @@ battleInTimeSource = time_source_create(time_source_global, 1, time_source_units
 
 }, [], -1);
 
-
 function showBattle(_battlePosition = 1){
 	global.initiative = 0;
-	global.selectedEnemy = -1;
+	global.selectedEnemy = 1;
 	global.spellSelected = false;
 	global.spell = 0;
+	global.spellCasted = false;
 	battlePosition = _battlePosition;
 	time_source_start(battleInTimeSource);
 	battleCountUp = 0;
@@ -114,8 +150,8 @@ function showBattle(_battlePosition = 1){
 	battleBGSpriteScale = 0;
 	global.inBattle = true;
 	audio_play_sound(snd_musicBattle, 1, true);
+	global.playerOverworld.regen = false;
 }
-
 
 // Battle Out
 battleDisappearTime = .75; // Seconds
@@ -132,16 +168,16 @@ battleOutTimeSource = time_source_create(time_source_global, 1, time_source_unit
 		percent = 1;
 		global.pauseOverworld = false;
 		global.inBattle = false;
-		
-		audio_stop_sound(snd_musicBattle);
+
 		with (obj_enemy){
 			instance_destroy();	
 		}
+		
 		time_source_stop(battleOutTimeSource);
+		battleUpgradeOffset = 0;
 	}
 	
-	battleMusicVolume = 1 - percent;
-	overworldMusicVolume = percent;
+
 	
 	if (battleBGSpriteScale <= 0){
 		battleUIAlpha = 0;
@@ -149,19 +185,12 @@ battleOutTimeSource = time_source_create(time_source_global, 1, time_source_unit
 	battleOffset = animcurve_channel_evaluate(animcurve_get_channel(anc_viewBattleDistort, "UI Canvas Offset"), battleBGSpriteScale);
 	battleUIPosition = animcurve_channel_evaluate(animcurve_get_channel(anc_viewBattleDistort, "UI"), battleBGSpriteScale);
 	overworldSurfacePosition = animcurve_channel_evaluate(animcurve_get_channel(anc_viewBattleDistort, "Out"), percent);
+	battleUpgradeOffset = overworldSurfacePosition;
 }, [], -1);
 
 function removeBattle(){
 
 	time_source_start(battleOutTimeSource);
-	
-	audio_play_sound(snd_musicOverworldBase, 1, true);
-	audio_play_sound(snd_musicOverworldClean, 2, true);
-	audio_sound_loop_end(snd_musicOverworldClean, audio_sound_length(snd_musicOverworldBase));
-	audio_play_sound(snd_musicOverworldCorrupted, 2, true);
-	audio_sound_loop_end(snd_musicOverworldCorrupted, audio_sound_length(snd_musicOverworldBase));
-	
-	
 	battleCountDown = 0;
 }
 
@@ -175,7 +204,7 @@ deathSurface = noone;
 surfaceCorruptPercent = noone;
 bufferCorruptPercent = buffer_create(4, buffer_fixed, 1);
 
-drawArray = noone;
+drawArray = array_create(0);
 
 
 
@@ -197,9 +226,9 @@ battlePortalC3 = make_color_rgb(129, 151, 150);
 battlePositions = array_create(5);
 battlePositions[0] = [[0, 0]];
 battlePositions[1] = [[96, 0], [-96, 0]];
-battlePositions[2] = [[96, -96], [-96, -96], [0, 96]];
+battlePositions[2] = [[96, -96], [0, 64], [-96, -96]];
 battlePositions[3] = [[192, 96], [96, -96], [-96, -96], [-192, 96]];
-battlePositions[4] = [[192, 96], [96, -96], [-96, -96], [-192, 96], [0, 64]];
+battlePositions[4] = [[192, 96], [96, -96], [0, 64], [-96, -96], [-192, 96]];
 battlePosition = 0;
 
 part_system_automatic_draw(battlePartSystem, false);
@@ -229,12 +258,18 @@ transitionTimeSource = time_source_create(time_source_global, 1, time_source_uni
 	}
 	
 	if (transitionStarted && !fullyOcluded){
+
+		
 		transitionAlpha += fadeInPercent * global.deltaTime;
+		
 		if (transitionAlpha >= 1){
 			transitionAlpha = 1;
 			fullyOcluded = true;
-
 		}	
+		if (instance_exists(global.playerOverworld)){
+			global.playerOverworld.image_index = animcurve_channel_evaluate(animcurve_get_channel(anc_transition, "Spin Up"), transitionAlpha);
+			global.playerOverworld.transitionOffset = animcurve_channel_evaluate(animcurve_get_channel(anc_transition, "Rise"), transitionAlpha);
+		}
 	}else if (fullyOcluded && !(timeOcluded >= timeToOclude)){
 		if (timeOcluded <= 0){
 			transitionCallback();
@@ -243,13 +278,17 @@ transitionTimeSource = time_source_create(time_source_global, 1, time_source_uni
 		timeOcluded += global.deltaTime;
 	}else{
 		transitionAlpha -= fadeOutPercent * global.deltaTime;
-		
-		if (transitionAlpha < 0.6){
-			global.pauseOverworld = false;	
+		if (instance_exists(global.playerOverworld)){
+			global.playerOverworld.image_index = animcurve_channel_evaluate(animcurve_get_channel(anc_transition, "Spin Down"), transitionAlpha);
+			global.playerOverworld.transitionOffset = animcurve_channel_evaluate(animcurve_get_channel(anc_transition, "Rise"), transitionAlpha);
 		}
-		
 		if (transitionAlpha <= 0){
+			global.pauseOverworld = false;
 			transitionAlpha = 0;
+			if (instance_exists(global.playerOverworld)){
+				global.playerOverworld.image_index = animcurve_channel_evaluate(animcurve_get_channel(anc_transition, "Spin Down"), transitionAlpha);
+				global.playerOverworld.transitionOffset = animcurve_channel_evaluate(animcurve_get_channel(anc_transition, "Rise"), transitionAlpha);
+			}
 			time_source_stop(transitionTimeSource);
 			transitionCallback = function(){};
 		}	
@@ -314,7 +353,7 @@ function reset(){
 	global.inBattle = false;
 
 	global.roomsCleared = 0;
-	global.difficulty = .75;
+	global.difficulty = .5;
 	
 	audio_play_sound(snd_musicLevelClear, 0, true);
 }
@@ -415,7 +454,9 @@ function doDeathScene(){
 	time_source_start(deathTimeSource);
 }
 
-
+spellPartSystem = part_system_create(ps_spell);
+spellPartDrawY = 7 * 540;
+part_system_automatic_draw(spellPartSystem, false);
 
 global.charge = new soundEffect("snd_spellChargeUp", global.sfxLevel, .1, .01); 
 global.release = new soundEffect("snd_spellRelease", global.sfxLevel, .1, .01); 

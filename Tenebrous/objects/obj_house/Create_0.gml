@@ -3,8 +3,8 @@
 
 event_inherited();
 corruptionSize = 17.5;
-encounterSize = irandom_range(3,4);
-
+encounterSize = irandom_range(2, 3);
+difficulty = encounterSize * 0.025 * 1.5;
 xOffset = 0;
 yOffset = -160;
 

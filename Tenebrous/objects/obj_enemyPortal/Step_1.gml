@@ -9,8 +9,8 @@ if (!corrupted){
 }
 
 randomize();
-premoveX = x;
-premoveY = y;
+var premoveX = x;
+var premoveY = y;
 
 if (waitTime > 0){
 	waitTime -= global.deltaTime * 1000;

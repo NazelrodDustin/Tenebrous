@@ -1,16 +1,18 @@
 /// @description Insert description here
 // You can write your code in this editor
 
-maxHP = 10 * global.difficulty;
+maxHP = ceil(100 * global.difficulty);
 hp = maxHP;
-spellDamageBase = 1 * global.difficulty;
-spellDamageRange = 0.1 * global.difficulty;
+spellDamageBase = ceil(10 * global.difficulty);
+spellDamageRange = ceil(5 * global.difficulty);
 blockLvl = 0.2 * global.difficulty;
 hitLvl = 1 * global.difficulty;
 roundsConfused = 0;
 attackTargets = [];
+critChance = 0.001 * global.difficulty;
+critAmount = max(1.0, 2.5 * global.difficulty);
 
-
+time_started = 0;
 
 confused = false;
 position = [];
@@ -39,7 +41,7 @@ attackTimeSource = time_source_create(time_source_global, 1, time_source_units_f
 	if (!attackSoundPlayed){
 		global.charge.play(0, 0, true);
 		//show_debug_message("Attack Charge Played");
-		global.spellColor = c_red;
+		global.spellColor = make_color_rgb(165, 48, 48);
 		attackSoundPlayed = true;
 	}
 	
@@ -80,19 +82,23 @@ attackTimeSource = time_source_create(time_source_global, 1, time_source_units_f
 				target = global.playerOverworld;	
 			}
 			
-			if (random(target.blockLvl) < random(hitLvl)){
-				target.doDamage(random_range(spellDamageBase, spellDamageBase + spellDamageRange));		
+			var block = random(target.blockLvl);
+			var hit = random(hitLvl);
+			show_debug_message("Block vs Hit: {0} -> {1}, Does hit? {2}", block, hit, (block < hit ? "Yes" : "No"));
+			if (block < hit || (target == id)){
+				
+				var crit = random(1) <= critChance;
+				if (crit){
+					var text = instance_create_layer(x, y - 48, "Instances", obj_textFade);
+					text.text = "Blocked";
+				}
+				target.doDamage((spellDamageBase + irandom(spellDamageRange)) * (crit ? critAmount : 1));
 				global.damage.play(0, 0, true);
 				//show_debug_message("Attack Damage Played");
 			}else{
+				target.doBlock();
 				global.block.play(0, 0, true);	
 				//show_debug_message("Attack Blocked Played");
-				
-				global.initiative += 1;
-			
-				if (global.initiative > instance_number(obj_enemy)){
-					global.initiative = 0;	
-				}
 			}
 			
 			if (target == global.playerOverworld){
@@ -100,12 +106,6 @@ attackTimeSource = time_source_create(time_source_global, 1, time_source_units_f
 			}
 			
 			global.spellAlpha = 0;
-			hasAttacked = false;
-			attackSoundPlayed = false;
-			releaseSoundPlayed = false;
-			resultSoundPlayed = false;
-			target = noone;
-			time_started = -1;
 			
 			time_source_stop(attackTimeSource);	
 		}
@@ -114,31 +114,28 @@ attackTimeSource = time_source_create(time_source_global, 1, time_source_units_f
 }, [], -1);
 
 function doAttack(){
-	time_started = current_time;
-	time_source_start(attackTimeSource);
+	alarm[0] = 60;
 }
 
 function doConfused(){
 	confused = true;
 	
-	global.initiative += 1;
-			
-	if (global.initiative > instance_number(obj_enemy)){
-		global.initiative = 0;	
-	}
+	passInitiative();
+}
+
+function doBlock(){
+	var text = instance_create_layer(x, y - 48, "Instances", obj_textFade);
+	text.text = "Blocked";
+	passInitiative();	
 }
 
 function doDamage(_amount){
 
-	hp -= _amount;
+	hp -= ceil(_amount);
 	//show_debug_message(hp);
-	global.initiative += 1;
-			
-	if (global.initiative > instance_number(obj_enemy)){
-		global.initiative = 0;	
-	}
+	passInitiative();
 	
-	if (hp < 0){
+	if (hp <= 0){
 		instance_destroy();	
 	}
 	

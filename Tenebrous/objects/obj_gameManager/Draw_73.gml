@@ -42,7 +42,23 @@ if (view_current == 7){
 			draw_sprite_ext(spr_battleUI, global.UIFrame, global.drawX, global.drawY + battleUIPosition, 1, 1, 0, c_white, battleUIAlpha);
 			
 			draw_surface_part(battleSurface, 0, 0, 960, overworldSurfacePosition, global.drawX, global.drawY);
-			draw_sprite_ext(spr_circleFade, 0, global.drawX + (960 / 2) + global.spellPosition[0], global.drawY + (540 / 2) + global.spellPosition[1], 1, 1, 0, global.spellColor, global.spellAlpha); //
+			
+			draw_sprite(spr_indicator, 0, global.drawX + (960 / 2), global.drawY + battleUpgradeOffset - 304);
+			
+			draw_sprite(spr_upgrade, 0, global.drawX + (960 / 2) - (960 / 4), global.drawY + battleUpgradeOffset);
+			draw_sprite(spr_upgrade, 0, global.drawX + (960 / 2), global.drawY + battleUpgradeOffset);
+			draw_sprite(spr_upgrade, 0, global.drawX + (960 / 2) + (960 / 4), global.drawY + battleUpgradeOffset);
+			
+			part_system_color(spellPartSystem, global.spellColor, global.spellAlpha);
+			part_system_drawit(spellPartSystem);
+			draw_sprite_ext(spr_circleFade, 0, global.drawX + (960 / 2) + global.spellPosition[0], global.drawY + (540 / 2) + global.spellPosition[1], .25, .25, 0, global.spellColor, global.spellAlpha); //
+			
+			with (obj_textFade){
+				draw_set_color(c_white);
+				draw_set_alpha(alpha);
+				draw_text(global.drawX + (960 / 2) + x - (string_width(text) / 2) , global.drawY + (540 / 2) + y, text);	
+				draw_set_alpha(1);
+			}
 		}
 
 	}

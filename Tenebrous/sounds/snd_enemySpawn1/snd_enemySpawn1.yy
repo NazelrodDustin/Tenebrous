@@ -9,7 +9,7 @@
   "bitRate":128,
   "compression":0,
   "conversionMode":0,
-  "duration":31.846146,
+  "duration":4.629812,
   "name":"snd_enemySpawn1",
   "parent":{
     "name":"Spawn",
